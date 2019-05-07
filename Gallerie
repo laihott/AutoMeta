@@ -11,6 +11,8 @@ body {
   box-sizing: border-box;
 }
 
+/* responsive nettisivu */
+
 .row {
   display: flex;
   flex-wrap: wrap;
@@ -44,6 +46,8 @@ body {
     max-width: 100%;
   }
 }
+
+/* END of responsive */
 
 .row:after {
   content: "";
