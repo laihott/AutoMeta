@@ -4,7 +4,8 @@
 # changed background to darkgrey
 # moved CCS to seperate stylesheet
 
-basic genaertion of gallery using php - trail run 
-opens directory and takes each image in directory and displays it.
-needs major refining
-dynamic php script genertaing gallery
+#basic genaertion of gallery using php - trail run 
+#opens directory and takes each image in directory and displays it.
+#needs major refining
+#dynamic php script genertaing gallery
+ #thumbnail dynmaic view added display issues to be resolved
