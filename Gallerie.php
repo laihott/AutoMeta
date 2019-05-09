@@ -9,70 +9,63 @@
 
 <h2 id="galleryHeading" style="text-align:center">Gallerie</h2>
 <?php
-echo"<div class='row'>";
-  
-  $dir = "gallery/";
-  //open directory and read contents
-  if (is_dir($dir)){
-      if ($dh = opendir($dir)){
-          $i=0;
-          while (($file = readdir($dh)) !== false){
-              $i=$i+1;
-              $imagepath=$dir.$file;
-              echo "<div class='column'>";
-              echo "<img src=$imagepath style='width:100%' onclick='openModal();currentSlide($i)' class='hover-shadow cursor'>";
+
+  function openReadDir ($dirPath, $imgType) { //open and read contents of gallery directory
+    $fileNameList =array();
+    if $imgType="galleryView"{ //gallery view is generated first so directory hasnt previoulsy been read
+    if (is_dir($dirPath)){ //open directory and read contents
+        if ($dh = opendir($dirPath)){
+            $i=0;
+            while (($file = readdir($dh)) !== false){
+                $fileNameList[$i]=$dirPath.$file;
+                $i=$i+1;
+                
+                  echo "<div class='column'>";
+                  echo "<img src=$fileNameList[$i] style='width:100%' onclick='openModal();currentSlide($i)' class='hover-shadow cursor'>";
+                  echo "</div>"; 
+            }
+            closedir($dh);
+            }
+            $totalImages=$i;
+        }
+      } elseif ($imgType="mySlides") {
+        $noImages=count($fileNameList);
+        for ($x=0; $x < $noImages; $x++) {
+              $xx=$x+1;
+              echo "<div class='mySlides'>";
+              echo"<div class='numbertext'>$xx/$noImages</div>";
+              echo "<img src=$fileNameList[$x] style='width:100%' >";
               echo "</div>";
-          }
-          closedir($dh);
-          }
-          $totalImages=$i;
+        }
+      } else {
+        $noImages=count($fileNameList);
+        for ($x=0; $x < $noImages; $x++) {
+              $xx=$x+1;
+              echo"<div class='column'>";
+              echo"<img class='demo cursor' src=$fileNameList[$x] style='width:100%' onclick='currentSlide($xx)' alt='decription of image $xx'>";
+              echo"</div>";
+        }
       }
-  
+  }
+  echo"<div class='row'>";
+  openReadDir("gallery/", "galleryView");
   echo "</div>";
 
   echo"<div id='myModal' class='modal'>";
   echo"  <span class='close cursor' onclick='closeModal()'>&times;</span>";
   echo"<div class='modal-content'>";
  
-   //open directory and read contents
-  if (is_dir($dir)){
-      if ($dh = opendir($dir)){
-          while (($file = readdir($dh)) !== false){
-              $k=$k+1;
-              $imagepath=$dir.$file;
-              echo "<div class='mySlides'>";
-              echo"<div class='numbertext'>$k/$i</div>";
-              echo "<img src=$imagepath style='width:100%' >";
-              echo "</div>";
-          }
-          closedir($dh);
-          }
-      }
-  
-        
-   echo" <a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
-   echo" <a class='next' onclick='plusSlides(1)'>&#10095;</a>";
+  openReadDir("gallery/", "mySlides");
+     
+  echo" <a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
+  echo" <a class='next' onclick='plusSlides(1)'>&#10095;</a>";
 
-    echo"<div class='caption-container'>";
-    echo" <p id='caption'></p>";
-    echo"</div>";
+  echo"<div class='caption-container'>";
+  echo" <p id='caption'></p>";
+  echo"</div>";
   
 
-
-if (is_dir($dir)){
-      if ($dh = opendir($dir)){
-          while (($file = readdir($dh)) !== false){
-              $k=$k+1;
-              $imagepath=$dir.$file;
-              echo"<div class='column'>";
-              echo"<img class='demo cursor' src=$imagepath style='width:100%' onclick='currentSlide(k)' alt='decription of image k'>";
-              echo"</div>";
-          }
-          closedir($dh);
-          }
-      }
-  
-
+  openReadDir("gallery/", "sliderThumbs");
     echo"</div>";
 echo"</div>";
 ?>
