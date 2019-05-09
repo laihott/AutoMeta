@@ -8,11 +8,10 @@
 <body>
 
 <h2 id="galleryHeading" style="text-align:center">Gallerie</h2>
-
-<div class="row">
-  <?php
+<?php
+echo"<div class='row'>";
+  
   $dir = "gallery/";
-
   //open directory and read contents
   if (is_dir($dir)){
       if ($dh = opendir($dir)){
@@ -26,55 +25,57 @@
           }
           closedir($dh);
           }
+          $totalImages=$i;
       }
-  ?>
-</div>
+  
+  echo "</div>";
 
-<div id="myModal" class="modal">
-  <span class="close cursor" onclick="closeModal()">&times;</span>
-  <div class="modal-content">
-  <?php
-  $dir = "gallery/";
-
-  //open directory and read contents
+  echo"<div id='myModal' class='modal'>";
+  echo"  <span class='close cursor' onclick='closeModal()'>&times;</span>";
+  echo"<div class='modal-content'>";
+ 
+   //open directory and read contents
   if (is_dir($dir)){
       if ($dh = opendir($dir)){
-          $i=0;
           while (($file = readdir($dh)) !== false){
-              $i=$i+1;
+              $k=$k+1;
               $imagepath=$dir.$file;
               echo "<div class='mySlides'>";
-              echo"<div class='numbertext'>1 / $i</div>";
+              echo"<div class='numbertext'>$k/$i</div>";
               echo "<img src=$imagepath style='width:100%' >";
               echo "</div>";
           }
           closedir($dh);
           }
       }
-  ?>
+  
         
-    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+   echo" <a class='prev' onclick='plusSlides(-1)'>&#10094;</a>";
+   echo" <a class='next' onclick='plusSlides(1)'>&#10095;</a>";
 
-    <div class="caption-container">
-      <p id="caption"></p>
-    </div>
+    echo"<div class='caption-container'>";
+    echo" <p id='caption'></p>";
+    echo"</div>";
+  
 
 
-    <div class="column">
-      <img class="demo cursor" src="img_nature_wide.jpg" style="width:100%" onclick="currentSlide(1)" alt="Nature and sunrise">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="img_snow_wide.jpg" style="width:100%" onclick="currentSlide(2)" alt="Snow">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="img_mountains_wide.jpg" style="width:100%" onclick="currentSlide(3)" alt="Mountains and fjords">
-    </div>
-    <div class="column">
-      <img class="demo cursor" src="img_lights_wide.jpg" style="width:100%" onclick="currentSlide(4)" alt="Northern Lights">
-    </div>
-  </div>
-</div>
+if (is_dir($dir)){
+      if ($dh = opendir($dir)){
+          while (($file = readdir($dh)) !== false){
+              $k=$k+1;
+              $imagepath=$dir.$file;
+              echo"<div class='column'>";
+              echo"<img class='demo cursor' src=$imagepath style='width:100%' onclick='currentSlide(k)' alt='decription of image k'>";
+              echo"</div>";
+          }
+          closedir($dh);
+          }
+      }
+  
+
+    echo"</div>";
+echo"</div>";
+?>
 
 <script>
 function openModal() {
