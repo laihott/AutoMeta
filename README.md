@@ -9,3 +9,5 @@
 #needs major refining
 #dynamic php script genertaing gallery
  #thumbnail dynmaic view added display issues to be resolved
+ #dynamic php gallery :) :) :)
+ 
