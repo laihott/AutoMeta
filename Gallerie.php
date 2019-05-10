@@ -10,15 +10,25 @@
 <h2 id="galleryHeading" style="text-align:center">Gallerie</h2>
 <?php
 $fileNameList = array('null');
-
+  
+  function isFileImage (){
+    $isImage = FALSE;
+    if ($imageFileType ="jpeg" || $imageFileType = "png" || $imageFileType ="jpg" || $imageFileType ="gif" || $imageFileType ="tiff") {
+      $isImage= TRUE;
+    }
+    return $isImage;
+  }
+  
   function openReadDir ($dirPath) { //open and read contents of gallery directory
     global $fileNameList;  
     if (is_dir($dirPath)){ //open directory and read contents
         if ($dh = opendir($dirPath)){
             $i=0;
             while (($file = readdir($dh)) !== false){
-                 $fileNameList[$i]=$dirPath.$file;     
-                 $i=$i+1;
+                if (isFileImage()) {
+                  $fileNameList[$i]=$dirPath.$file;     
+                  $i=$i+1;
+                } 
             }
             closedir($dh);
         }
