@@ -13,18 +13,19 @@ $fileNameList = array('null');
     
   function openReadDir ($dirPath) { //open and read contents of gallery directory
     global $fileNameList;  
+    $isImage = "null"; // initalise $isImage to null in case first file is non image
     if (is_dir($dirPath)){ //open directory and read contents
         if ($dh = opendir($dirPath)){
             $i=0;
             while (($file = readdir($dh)) !== false){
               $imageFileType = strtolower(pathinfo($file,PATHINFO_EXTENSION));  //check fiel extension is image
               if ($imageFileType == "jpeg" || $imageFileType == "png" || $imageFileType == "jpg" || $imageFileType == "gif" || $imageFileType == "tiff") {
-                $isImage = true;
+                $isImage = "true";
               }
-                if ($isImage == true) {
+                if ($isImage == "true") {
                   $fileNameList[$i]=$dirPath.$file;     
                   $i=$i+1;
-                  $isImage = false;
+                  $isImage = "false";
                 } 
             }
             closedir($dh);
