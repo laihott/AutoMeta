@@ -57,6 +57,7 @@ $fileNameList = array('null');
               $xx=$x+1;
               echo "<div class='mySlides'>";
               echo"<div class='numbertext'>$xx/$noImages</div>";
+              echo"<div class='col_keyword'><ul><li>1st keywrod</li><li>2nd</li><li>3rd</li><li>etc etc etc</li></ul></div>";
               echo "<img src=$fileNameList[$x] style='width:100%' >";
               echo "</div>";
             }
