@@ -10,15 +10,23 @@
 <h2 id="galleryHeading" style="text-align:center">Gallerie</h2>
 <?php
 $fileNameList = array('null');
-
+    
   function openReadDir ($dirPath) { //open and read contents of gallery directory
     global $fileNameList;  
+    $isImage = "null"; // initalise $isImage to null in case first file is non image
     if (is_dir($dirPath)){ //open directory and read contents
         if ($dh = opendir($dirPath)){
             $i=0;
             while (($file = readdir($dh)) !== false){
-                 $fileNameList[$i]=$dirPath.$file;     
-                 $i=$i+1;
+              $imageFileType = strtolower(pathinfo($file,PATHINFO_EXTENSION));  //check fiel extension is image
+              if ($imageFileType == "jpeg" || $imageFileType == "png" || $imageFileType == "jpg" || $imageFileType == "gif" || $imageFileType == "tiff") {
+                $isImage = "true";
+              }
+                if ($isImage == "true") {
+                  $fileNameList[$i]=$dirPath.$file;     
+                  $i=$i+1;
+                  $isImage = "false";
+                } 
             }
             closedir($dh);
         }
@@ -49,6 +57,7 @@ $fileNameList = array('null');
               $xx=$x+1;
               echo "<div class='mySlides'>";
               echo"<div class='numbertext'>$xx/$noImages</div>";
+              echo"<div class='col_keyword'><ul><li>1st keywrod</li><li>2nd</li><li>3rd</li><li>etc etc etc</li></ul></div>";
               echo "<img src=$fileNameList[$x] style='width:100%' >";
               echo "</div>";
             }
