@@ -194,9 +194,102 @@ img.hover-shadow {
   transition: 0.3s;
 }
 
+
 .hover-shadow:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
+/*keywoprd side panel formatting*/
+/*------------------------------*/
+.sidepanel  {
+  width: 0;
+  position: fixed;
+  z-index: 1;
+  height: 250px;
+  top: 10px;
+  right: 10px;
+  background-color: #111;
+  overflow-x: hidden;
+  transition: 0.5s;
+  padding-top: 60px;
+  
+}
+
+.sidepanel ul {
+  padding: 8px 8px 8px 32px;
+  text-decoration: none;
+  font-size: 25px;
+  color: #818181;
+  display: block;
+  transition: 0.3s;
+}
+
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+
+.sidepanel .closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+}
+
+.openbtn {
+  font-size: 20px;
+  cursor: pointer;
+  background-color: #111;
+  color: white;
+  padding: 10px 15px;
+  border: none;
+}
+
+.openbtn:hover {
+  background-color:#444;
+}
+
+ /* Remove default bullets */
+ul, #myUL {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: white;
+  display: inline-block;
+  margin-left: 6px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.sidepanel .nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.sidepanel .active {
+  display: block;
+} 
+/*---------------------------------------------------*/
+/*--------- ENDOF side panel formatting -------------*/
+/*---------------------------------------------------*/
 </style>
 <body>
 
@@ -226,13 +319,35 @@ img.hover-shadow {
             <div class="col_img">
             <div class="numbertext">1 / 4</div>
             <div class="col_keyword">
-                <ul>
-                 <li>1st keywrod</li> 
-                 <li>2nd</li>
-                 <li>3rd</li>
-                 <li>etc etc etc</li>
-                </ul>
-              </div> 
+                <div id="mySidepanel" class="sidepanel">
+                    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+                    <ul id="myUL">
+                    <li><span class="caret">Beverages</span>
+                      <ul class="nested">
+                        <li>Water</li>
+                        <li>Coffee</li>
+                        <li><span class="caret">Tea</span>
+                          <ul class="nested">
+                            <li>Black Tea</li>
+                            <li>White Tea</li>
+                            <li><span class="caret">Green Tea</span>
+                              <ul class="nested">
+                                <li>Sencha</li>
+                                <li>Gyokuro</li>
+                                <li>Matcha</li>
+                                <li>Pi Lo Chun</li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul> 
+                  </div>
+                  <button class="openbtn" onclick="openNav()">☰ Keywords</button>
+            </div>
+            
+             
             <img src="img_nature_wide.jpg" style="width:100%">
         </div>
     </dic>  
@@ -245,12 +360,12 @@ img.hover-shadow {
     <div class="mySlides">
       <div class="numbertext">2 / 4</div>
       <div class="col_keyword">
-          <ul>
+         <p> <ul>
            <li>1st keywrod</li> 
            <li>2nd</li>
            <li>3rd</li>
            <li>etc etc etc</li>
-          </ul>
+          </ul></p>
         </div> 
       <img src="img_snow_wide.jpg" style="width:100%">
     </div>
@@ -289,6 +404,24 @@ img.hover-shadow {
 </div>
 
 <script>
+function openNav() {
+  document.getElementById("mySidepanel").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("mySidepanel").style.width = "0";
+}
+
+var toggler = document.getElementsByClassName("caret");
+var i;
+
+for (i = 0; i < toggler.length; i++) {
+  toggler[i].addEventListener("click", function() {
+    this.parentElement.querySelector(".nested").classList.toggle("active");
+    this.classList.toggle("caret-down");
+  });
+} 
+
 function openModal() {
   document.getElementById('myModal').style.display = "block";
 }
