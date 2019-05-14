@@ -4,28 +4,15 @@
 <meta charset="UTF-8">
 <meta content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="w3.css">
+<link rel="stylesheet" href="main.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<script src="signup.js"></script>
 <style>
-body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif;}
 body, html {
   height: 100%;
   color: #777;
   line-height: 1.8;
-}
-
-/* First image (Logo. Full height) */
-.logo {
-  background-image: url('autometalogo.png');
-  background-position: center;
-  background-repeat: no-repeat;
-  height:300px;
-}
-
-/* Välipalkki containereiden väliin */
-.bar {
-  background-image: url("bar.png");
-  height:10px;
 }
 </style>
 
@@ -44,7 +31,8 @@ body, html {
     <a href="#about" class="w3-bar-item w3-button w3-hide-small"></i>ABOUT</a>
     <a href="HTML TIEDOSTON NIMI TÄNNE" class="w3-bar-item w3-button w3-hide-small"></i>GALLERY</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal">Language</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">Login placeholder</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-lime" onclick="document.getElementById('id02').style.display='block'">Sign up</a>
+    <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red" onclick="document.getElementById('id01').style.display='block'">Login</a>
   </div>
 
   <!-- Navbar on small screens -->
@@ -55,7 +43,7 @@ body, html {
     <a href="#recent" class="w3-bar-item w3-button" onclick="toggleFunction()">RECENTLY UPLOADED</a>
     <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
     <a href="HTML TIEDOSTON NIMI TÄNNE" class="w3-bar-item w3-button" onclick="toggleFunction()">GALLERY</a>
-    <a href="#" class="w3-bar-item w3-button">Login placeholder</a>
+    <a href="#" class="w3-bar-item w3-button">Login</a>
     <a href="#" class="w3-bar-item w3-button">Language</a>
   </div>
 </div>
@@ -66,7 +54,6 @@ body, html {
 
 <!-- Container (Main) -->
 <div class="w3-content w3-container w3-padding-64">
-  <h3 class="w3-center">AutoMeta</h3>
   <p class="w3-center"><em>What it is & how it works</em></p>
   <div class="w3-row">
     <div class="w3-col m6 w3-center w3-padding-large">
@@ -87,7 +74,7 @@ body, html {
 <!-- Container (Help) -->
 <div class="w3-content w3-container w3-padding-64" id="help">
   <div class="w3-center">
-  <h3 class="w3-center">Help</h3>
+  <h3 class="w3-center">HELP</h3>
   This is help text, explaining in more detail how to use AutoMeta.
 </div>
 </div>
@@ -99,7 +86,7 @@ body, html {
 <!-- Container (Upload) -->
 <div class="w3-content w3-container w3-padding-64" id="upload">
   <div class="w3-center">
-  <h3 class="w3-center">Upload a new image</h3>
+  <h3 class="w3-center">UPLOAD A NEW IMAGE</h3>
   This is placeholder for uploading new images.
 </div>
 </div>
@@ -112,52 +99,6 @@ body, html {
 <div class="w3-content w3-container w3-padding-64" id="recent">
   <h3 class="w3-center">RECENTLY UPLOADED IMAGES</h3>
   <p class="w3-center">To visit the gallery to see all the images, click <a href="HTML TIEDOSTON NIMI TÄNNE">here</a>.</p>
-
-  <!-- Responsive Grid. Four columns on tablets, laptops and desktops. Will stack on mobile devices/small screens (100% width) -->
-  <div class="w3-row-padding w3-center" style="cursor:pointer">
-    <div class="w3-col m3">
-      <img src="p1.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="The mist over the mountains">
-    </div>
-
-    <div class="w3-col m3">
-      <img src="p2.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Coffee beans">
-    </div>
-
-    <div class="w3-col m3">
-      <img src="p3.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Bear closeup">
-    </div>
-
-    <div class="w3-col m3">
-      <img src="p4.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Quiet ocean">
-    </div>
-  </div>
-
-  <div class="w3-row-padding w3-center w3-section" style="cursor:pointer">
-    <div class="w3-col m3">
-      <img src="p5.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="The mist">
-    </div>
-
-    <div class="w3-col m3">
-      <img src="p6.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="My beloved typewriter">
-    </div>
-
-    <div class="w3-col m3">
-      <img src="p7.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Empty ghost train">
-    </div>
-
-    <div class="w3-col m3">
-      <img src="p8.jfif" style="width:100%" onclick="onClick(this)" class="w3-hover-opacity" alt="Sailing">
-    </div>
-  </div>
-</div>
-
-<!-- Modal for full size images on click-->
-<div id="modal01" class="w3-modal w3-black" onclick="this.style.display='none'">
-  <span class="w3-button w3-large w3-black w3-display-topright" title="Close Modal Image"><i class="fa fa-remove"></i></span>
-  <div class="w3-modal-content w3-animate-zoom w3-center w3-transparent w3-padding-64">
-    <img id="img01" class="w3-image">
-    <p id="caption" class="w3-opacity w3-large"></p>
-  </div>
 </div>
 
 <!-- Harmaa välipalkki -->
@@ -170,42 +111,58 @@ body, html {
   <p class="w3-center"><em>Info about us and the project</em></p>
 </div>
 
+<!-- Login form-->
+<div id="id01" class="modal">
+  <form class="modal-content animate" action="/action_page.php">
+    <div class="container">
+      <span onclick="document.getElementById('id01').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <h1>Login to your account</h1>
+      <hr>
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" name="uname" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+    <div class="clearfix">
+      <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+      <button type="submit" class="signupbtn">Login</button>
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+    </div>
+  </form>
+</div>
+
+<!-- Sign up form -->
+<div id="id02" class="modal">
+  <form class="modal-content animate" action="/action_page.php">
+    <div class="container">
+      <span onclick="document.getElementById('id02').style.display='none'" class="close" title="Close Modal">&times;</span>
+      <h1>Sign Up</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+      <label for="email"><b>Email</b></label>
+      <input type="text" placeholder="Enter Email" name="email" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" name="psw" required>
+
+      <label for="psw-repeat"><b>Repeat Password</b></label>
+      <input type="password" placeholder="Repeat Password" name="psw-repeat" required>
+
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id02').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
+
 <!-- Footer -->
 <footer class="w3-center w3-black w3-padding-64 w3-opacity w3-hover-opacity-off">
   <a href="#main" class="w3-button w3-light-grey"><i class="fa fa-arrow-up w3-margin-right"></i>To the top</a>
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
 </footer>
-
-<script>
-// Modal Image Gallery
-function onClick(element) {
-  document.getElementById("img01").src = element.src;
-  document.getElementById("modal01").style.display = "block";
-  var captionText = document.getElementById("caption");
-  captionText.innerHTML = element.alt;
-}
-
-// Change style of navbar on scroll
-window.onscroll = function() {myFunction()};
-function myFunction() {
-    var navbar = document.getElementById("myNavbar");
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
-        navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
-    } else {
-        navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");
-    }
-}
-
-// Used to toggle the menu on small screens when clicking on the menu button
-function toggleFunction() {
-    var x = document.getElementById("navDemo");
-    if (x.className.indexOf("w3-show") == -1) {
-        x.className += " w3-show";
-    } else {
-        x.className = x.className.replace(" w3-show", "");
-    }
-}
-</script>
 
 </body>
 </html>
