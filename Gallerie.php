@@ -27,7 +27,7 @@ $fileNameList = array('null');
     //collect_XMLFile(imageFileName)
     //open returned imagefilename.xml
     //keyword area :
-     //lr:hierarchicalSubject>
+     //<lr:hierarchicalSubject>
     //<rdf:Bag>
     //<rdf:li>1 - "Who"</rdf:li>
     //<rdf:li>1 - "Who"|Age</rdf:li>
