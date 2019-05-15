@@ -9,31 +9,49 @@
 retrieve keyword <button type = "button" onClick = "loadfile()">retrieve</button>
 
 </form>
+
+<p>
+    <div id="inAppError">status ok</div>
+</p>
 <div id = "keywordList"><b>key words will be listed here...</b></div>
 
 <script>
+function betatestFunction(xmlFile){
+    var i;
+    var xmlDoc = xmlFile.responseXML;
+    var x = xmlDoc.getElementsByTagName("lr:hierarchicalSubject");
+    var myList = "<ul>";
+    
+    for (i=0; i<x.length; i++){
+     myList += "<ul><li>" + x[i].getElementsByTagName("rdf:li")[0].nodeValue + "</li>" ;
+    }
+    myList += "</ul><br>succes??";
+    document.getElementById("keywordList").innerHTML = myList;
+   } 
+
   function loadfile() {
-    var xhttp ;//= new XMLHttpRequest();
+    var clientXml = new XMLHttpRequest;
     if (window.XMLHttpRequest) {
       // code for IE7+, Firefox, Chrome, Opera, Safari
-      xhttp = new XMLHttpRequest();
+      clientXml = new XMLHttpRequest();
     } else {  // code for IE6, IE5
-      xhttp = new ActiveXObject("Microsoft.XMLHTTP");
+      clientXml = new ActiveXObject("Microsoft.XMLHTTP");
     }
-    document.getElementById("keywordList").innerHTML="WTF!";
-    xhttp.onreadystatechange = function() {
+    
+    
+    clientXml.onreadystatechange = function() {
       if (this.readyState == 4 && this.status == 200) {
-        document.getElementById("keywordList").innerHTML = this.responseText;
+       /*document.getElementById("keywordList").innerHTML = this.responseText;*/ 
+       betatestFunction(this);
       } else  { 
-        document.getElementById("keywordList").innerHTML = this.statusText; 
+        document.getElementById("inAppError").innerHTML = "file status : readystate : " + this.statusText ; 
       }
     }
-    
-    
-    xhttp.open("GET","keywordtest.xml",true);
-    xhttp.send(); 
-    
+    clientXml.open("GET","keywordtest.xmp");
+    clientXml.send();
   }
+
+  
   </script>
 
 </body>
