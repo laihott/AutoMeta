@@ -1,7 +1,7 @@
 <?php 
 echo"entering php script <br/>";
-echo " $q equal to ";
-$xml=simplexml_load_file("keywordtest.xml") or die ("Error : go fuck yourself"); //adjust error message before publishing!!!!!!!!!
+
+$xml=simplexml_load_file("keywordtest.xml") or die ("Error : cant open file"); //adjust error message before publishing!!!!!!!!!
 print_r($xml);
 /*foreach($xml->children() as $subject){
     echo $subject->rdf .", <br>" ;
