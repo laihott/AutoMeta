@@ -20,13 +20,16 @@ function betatestFunction(xmlFile){
     var i;
     var xmlDoc = xmlFile.responseXML;
     var x = xmlDoc.getElementsByTagName("lr:hierarchicalSubject");
-    var xx = x[0].childNodes;
+    var xx = x[0].lastElementChild.childNodes;
     var myList = "<ul>";
     
     for (i=0; i<xx.length; i++){
-     myList += "<ul><li> node type/name/value : " + xx[i].nodeType + " / " + xx[i].nodeName + " / " + xx[i].nodeValue + "</li>" ;
+     if (xx[i].nodeType == 1) {
+       myList += "<li>" + xx[i].innerHTML + "</li>";
+     }
+     /*myList += "<ul><li> node type/name/value : " + xx[i].nodeType + " / " + xx[i].nodeName + " / " + xx[i].nodeValue + "</li>" ; */
     }
-    myList += "</ul><br>succes??";
+    myList += "</ul><br>success??";
     document.getElementById("keywordList").innerHTML = myList;
    } 
 
