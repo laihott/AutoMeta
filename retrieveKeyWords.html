@@ -20,10 +20,11 @@ function betatestFunction(xmlFile){
     var i;
     var xmlDoc = xmlFile.responseXML;
     var x = xmlDoc.getElementsByTagName("lr:hierarchicalSubject");
+    var xx = x[0].childNodes;
     var myList = "<ul>";
     
-    for (i=0; i<x.length; i++){
-     myList += "<ul><li>" + x[i].textContent +"</li>" ;
+    for (i=0; i<xx.length; i++){
+     myList += "<ul><li> node type/name/value : " + xx[i].nodeType + " / " + xx[i].nodeName + " / " + xx[i].nodeValue + "</li>" ;
     }
     myList += "</ul><br>succes??";
     document.getElementById("keywordList").innerHTML = myList;
