@@ -23,7 +23,7 @@ function betatestFunction(xmlFile){
     var myList = "<ul>";
     
     for (i=0; i<x.length; i++){
-     myList += "<ul><li>" + x[i].getElementsByTagName("rdf:li")[0].nodeValue + "</li>" ;
+     myList += "<ul><li>" + x[i].textContent +"</li>" ;
     }
     myList += "</ul><br>succes??";
     document.getElementById("keywordList").innerHTML = myList;
@@ -47,7 +47,7 @@ function betatestFunction(xmlFile){
         document.getElementById("inAppError").innerHTML = "file status : readystate : " + this.statusText ; 
       }
     }
-    clientXml.open("GET","keywordtest.xmp");
+    clientXml.open("GET","testfilebeta.XMP");
     clientXml.send();
   }
 
