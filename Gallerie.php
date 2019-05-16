@@ -11,14 +11,50 @@
 <?php
 $fileNameList = array('null');
 
+  function collect_XMLfile ($imageFileName){
+    global $fileNameList;
+    //take exisiting filename find postion of "."
+    // file name up to "." + xml = imageFilename.xml
+    //return imageFile.xmml
+    $extPos = stripos($imageFileName,".") ;
+    $strImageName = substr($imageFileName,0,$extPos);
+    $xml_imgName = $strImageName.".xml";
+    return $xml_imgName;
+    
+  }
+
+  function retreiveKeywords () {
+    //collect_XMLFile(imageFileName)
+    //open returned imagefilename.xml
+    //keyword area :
+     //<lr:hierarchicalSubject>
+    //<rdf:Bag>
+    //<rdf:li>1 - "Who"</rdf:li>
+    //<rdf:li>1 - "Who"|Age</rdf:li>
+    //<rdf:li>1 - "Who"|Age|infant</rdf:li>
+    //</rdf:Bag>
+    //scan file for keyword area
+    //extract keywords as array of array os string - to enable hierachy level keywords
+   
+    //return keyword array
+  }
+    
   function openReadDir ($dirPath) { //open and read contents of gallery directory
     global $fileNameList;  
+    $isImage = "null"; // initalise $isImage to null in case first file is non image
     if (is_dir($dirPath)){ //open directory and read contents
         if ($dh = opendir($dirPath)){
             $i=0;
             while (($file = readdir($dh)) !== false){
-                 $fileNameList[$i]=$dirPath.$file;     
-                 $i=$i+1;
+              $imageFileType = strtolower(pathinfo($file,PATHINFO_EXTENSION));  //check fiel extension is image
+              if ($imageFileType == "jpeg" || $imageFileType == "png" || $imageFileType == "jpg" || $imageFileType == "gif" || $imageFileType == "tiff") {
+                $isImage = "true";
+              }
+                if ($isImage == "true") {
+                  $fileNameList[$i]=$dirPath.$file;     
+                  $i=$i+1;
+                  $isImage = "false";
+                } 
             }
             closedir($dh);
         }
@@ -47,8 +83,10 @@ $fileNameList = array('null');
       case "myLightboxSlides" :
           for ($x=0; $x < $noImages; $x++) {
               $xx=$x+1;
+              collect_XMLFile($fileNameList[$x]);
               echo "<div class='mySlides'>";
               echo"<div class='numbertext'>$xx/$noImages</div>";
+              echo"<div class='col_keyword'><ul><li> 1st keywrod</li><li>2nd</li><li>3rd</li><li>etc etc etc</li></ul></div>"; //addition function called here to collect keywords and generate keyword lists
               echo "<img src=$fileNameList[$x] style='width:100%' >";
               echo "</div>";
             }
