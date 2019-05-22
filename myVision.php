@@ -36,15 +36,16 @@ function collectFeature() {
       
     $myFeatures = array();
     $myFeatures = $_POST["features"];
-    $tmpx = "";
+    $tmpx = "[";
     $len = count($myFeatures);
-   /* for ($i = 0; $i <= $len; $i++) {
-        $tmpx = $tmpx . ' "type":"'. $myFeatures[$i].'"';
-        if ($i != count($myFeatures)) { 
-            $tmpx=$tmpx.',';
+    for ($i=0; $i<$len;$i++) {
+        $tmpx = $tmpx . "TYPE::". $myFeatures[$i];
+        if (($i+1) < count($myFeatures)) { 
+            $tmpx=$tmpx.', ';
         }
-        echo $tmpx."<BR/>";
-    }*/
+    }
+    $tmpx = $tmpx. "]";
+    echo $tmpx;
     $regFeatures = $tmpx;
     //echo "<br/> features_tmp : " .implode(",",$myFeatures);
     //$regFeatures =  implode('"type":"',$myFeatures.'"') ;
@@ -106,12 +107,13 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
 
 //$imgSource = collectImgSource(); // call function to gather filename / type of location of image file ie local/web/G:S
 echo "img data collected preparing to enter collection of features<br/>";
-//$requestedFeatures = [TYPE:LABEL_DECTECTION]; /*collectFeature()*/  // Gather feature image is to be analys3ed for
+$requestedFeatures = collectFeature();  // Gather feature image is to be analys3ed for
 $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
 //$image = file_get_contents($fileName);
  echo "<BR/> regFeatures : ".$requestedFeatures;
- echo "<BR/> i got so far but i didnt really make it";
- $requestedFeatures = [TYPE::LABEL_DETECTION];
+ echo "<BR/> i got so far but i didnt really make it <BR/>";
+ //$requestedFeatures = [TYPE::LABEL_DETECTION];
+ echo $requestedFeatures;
  $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
  //$response = $imageAnnotator->labelDetection($imgSource);
  /*$response = $imageAnnotator->annotateImages( '{ "requests": [
@@ -125,6 +127,7 @@ $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
     ); */
     // $imgSource,$requestedFeatures);
  echo "<BR/>hay";
+ $labels = "";
 $labels = $response->getLabelAnnotations();
 if ($labels) {
     echo("Labels:" . PHP_EOL."<BR/>");

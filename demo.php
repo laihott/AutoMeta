@@ -16,18 +16,13 @@ $vision =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json'
 
 
 echo "img data collected preparing to enter collection of features<br/>";
-//$requestedFeatures = "[type:LABEL_DECTECTION]"; /*collectFeature()*/ ; // Gather feature image is to be analys3ed for
+//$requestedFeatures = collectFeature() ; // Gather feature image is to be analys3ed for
 $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
 //$image = file_get_contents($fileName);
- echo "<BR/> regFeatures : ".$requestedFeatures;
- echo "<BR/> i got so far but i didnt really make it<br/>";
- 
- $myfeatures= [TYPE::LABEL_DETECTION];
- echo "im here <br/>";
+/*   $features = [TYPE::LABEL_FEATURE, TYPE::#nextFEATURE] <---format to send feature requests */
+ $myfeatures= [TYPE::LABEL_DETECTION, 4, TYPE::SAFE_SEARCH_DETECTION, TYPE::WEB_DETECTION,2]; //<<<<<<-------  //working example of TYPE label tag! <<<<<---------
  $response = $vision->annotateImage($imgSource, $myfeatures);
- echo "<br/>oh oh <br/>";
-
- //$response = $img->requestObject();
+ 
  /*$response = $imageAnnotator->annotateImages( '{ "requests": [
      {
          "image":{"content": $imgSource},
@@ -39,6 +34,27 @@ $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
     ); */
     // $imgSource,$requestedFeatures);
  echo "<BR/>hay";
+ $safe = $response->getSafeSearchAnnotation();
+ 
+ if ($safe) {
+    echo ("safe search :" . PHP_EOL . "<br/>");
+    $likeihood = ['Unkown', 'Very Unlikely', 'Unlikey', 'Possible', 'Likely', 'Very Unlikely'];
+    $adult = $safe->getAdult();
+    $medical = $safe->getMedical();
+    $spoof = $safe->getSpoof();
+    $violence = $safe->getViolence();
+    $racy = $safe->getRacy();
+
+    echo("Adult:"  . $likeihood[$adult] . "<BR/>");
+    echo("Medical: "  . $likeihood[$medical]. "<BR/>");
+    echo("Spoof: " . $likeihood[$spoof]. "<BR/>");
+    echo("Violence: ". $likeihood[$violence]. "<BR/>");
+    echo("Racy: " . $likeihood[$racy]. "<BR/>");
+
+ } else {
+     echo ("No SafeSearch Results Returned <BR/>");
+ }
+
 $labels = $response->getLabelAnnotations();
 if ($labels) {
     echo("Labels:" . PHP_EOL."<BR/>");
