@@ -1,6 +1,7 @@
 <?php
-namespace Google\Cloud\Samples\Auth;
+namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
 echo "entering php script <BR/>";
+
 /**
  * Copyright 2016 Google Inc.
  *
@@ -20,6 +21,14 @@ echo "entering php script <BR/>";
 # [START vision_quickstart]
 # includes the autoloader for libraries installed with composer
 
+require __DIR__ . '/vendor/autoload.php';
+
+# imports the Google Cloud client library
+
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Feature;
+use Google\Cloud\Vision\V1\Feature\Type;
+
 function collectImgSource () {
     $fileName = $_POST["imgName"]; // collect fime name/url passed from form
     // check if file name is local web url or GS archieved image
@@ -34,31 +43,21 @@ function collectImgSource () {
 
 function collectFeature() {
       
-    $myFeatures = array();
+    //$myFeatures = array();
     $myFeatures = $_POST["features"];
-    $tmpx = "[";
-    $len = count($myFeatures);
-    for ($i=0; $i<$len;$i++) {
-        $tmpx = $tmpx . "TYPE::". $myFeatures[$i];
-        if (($i+1) < count($myFeatures)) { 
-            $tmpx=$tmpx.', ';
-        }
+    /*$len = count($myFeatures);
+    foreach ($myFeatures as $myx) {
+        $i=0;
+        $strFeature = "TYPE::$myx";
+        echo $strFeature."<BR/>";
+        $tmpx[$i]=$strFeature;
+        $i++;
     }
-    $tmpx = $tmpx. "]";
-    echo $tmpx;
-    $regFeatures = $tmpx;
-    //echo "<br/> features_tmp : " .implode(",",$myFeatures);
-    //$regFeatures =  implode('"type":"',$myFeatures.'"') ;
-    return $regFeatures;
+    
+   $strFeature = [ $tmpx(0), $tmpx(1), $tmpx(2), $tmpx(3)];
+    foreach ($tmpx as $x) {echo $x.", ";};*/
+    return $myFeatures;
 }
-
-require __DIR__ . '/vendor/autoload.php';
-
-# imports the Google Cloud client library
-use Google\Cloud\Vision\V1\ImageAnnotatorClient;
-use Google\Cloud\Vision\V1\Feature;
-use Google\Cloud\Vision\V1\Feature\Type;
-
 
 # instantiates a client
 // instantiates new imageannotatorClient with credentails for authorising in .json
@@ -110,10 +109,10 @@ echo "img data collected preparing to enter collection of features<br/>";
 $requestedFeatures = collectFeature();  // Gather feature image is to be analys3ed for
 $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
 //$image = file_get_contents($fileName);
- echo "<BR/> regFeatures : ".$requestedFeatures;
+
  echo "<BR/> i got so far but i didnt really make it <BR/>";
  //$requestedFeatures = [TYPE::LABEL_DETECTION];
- echo $requestedFeatures;
+
  $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
  //$response = $imageAnnotator->labelDetection($imgSource);
  /*$response = $imageAnnotator->annotateImages( '{ "requests": [
