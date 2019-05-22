@@ -10,12 +10,13 @@
                 <form method="POST" action="myVision.php">
             <fieldset>
                 <legend> Analytical Options :</legend>
-                    <ul>
-                            <li> Label Detection</li>
-                            <li> face dectection</li>
-                            <li> Landmark Detection</li>
-                            <li> Safe search</li>
-                        </ul>
+                    
+                            <input type="checkbox" name="features[]" Value="LABEL_DETECTION" >Labels<BR/>
+                            <input type="checkbox" name="features[]" Value="FACE_DETECTION" > face dectection<BR/>
+
+                            <input type="checkbox" name="features[]" Value="LANDMARK_DETECTION" >Landmark Detection<BR/>
+                            <input type="checkbox" name="features[]" Value="SAFE_SEARCH_DETECTION" >Safe search<BR/>
+                        
             </fieldset>
             
         

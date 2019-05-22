@@ -1,6 +1,6 @@
 <?php
 namespace Google\Cloud\Samples\Auth;
-
+echo "entering php script <BR/>";
 /**
  * Copyright 2016 Google Inc.
  *
@@ -20,37 +20,49 @@ namespace Google\Cloud\Samples\Auth;
 # [START vision_quickstart]
 # includes the autoloader for libraries installed with composer
 
-require __DIR__ . '/vendor/autoload.php';
-
-# imports the Google Cloud client library
-use Google\Cloud\Vision\V1\ImageAnnotatorClient;
-
-
-# instantiates a client
-// instantiates new imageannotatorClient with credentails for authorising in .json
-$imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/mproj-123456.json']);
-# the name of the image file to annotate
-
-
-
 function collectImgSource () {
     $fileName = $_POST["imgName"]; // collect fime name/url passed from form
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
-    $filex64 = fopen($fileName,"r") or die ("unable to open file");
-    $imgJsonX64 ="{ \"content\":$filex64}";
-
+    //$filex = fopen($fileName,"r") or die ("unable to open file");
+    $contents = file_get_contents($fileName);
+    fclose($fileName);
+    $fileX64 = base64_encode($contents); // convert file based image to basex64
+    $imgJsonX64 =$fileX64;
     return $imgJsonX64 ;
 }
 
 function collectFeature() {
-
-
+      
+    $myFeatures = array();
+    $myFeatures = $_POST["features"];
+    $tmpx = "";
+    $len = count($myFeatures);
+   /* for ($i = 0; $i <= $len; $i++) {
+        $tmpx = $tmpx . ' "type":"'. $myFeatures[$i].'"';
+        if ($i != count($myFeatures)) { 
+            $tmpx=$tmpx.',';
+        }
+        echo $tmpx."<BR/>";
+    }*/
+    $regFeatures = $tmpx;
+    //echo "<br/> features_tmp : " .implode(",",$myFeatures);
+    //$regFeatures =  implode('"type":"',$myFeatures.'"') ;
+    return $regFeatures;
 }
 
+require __DIR__ . '/vendor/autoload.php';
 
-function generateJSON (){
-   
+# imports the Google Cloud client library
+use Google\Cloud\Vision\V1\ImageAnnotatorClient;
+use Google\Cloud\Vision\V1\Feature;
+use Google\Cloud\Vision\V1\Feature\Type;
+
+
+# instantiates a client
+// instantiates new imageannotatorClient with credentails for authorising in .json
+$imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json']);
+  
    /**************************************************************************
     * 
     * {
@@ -82,25 +94,37 @@ function generateJSON (){
     *
     *
     ************************************************************************   
-
-    
-    
+   
     *$imgRequestJSON = "{ \"image\": $imgSource }, \"features\":[ { $reqFeatures } ] }"
-    *return $imgRequestJSON ;
-
-    }*/
-
-}
+    *return $imgRequestJSON */
 
 # prepare the image to be annotated
 
-$image = file_get_contents($fileName);
+// $image = file_get_contents($fileName);
 
 # performs label detection on the image file
-// $imgSource = collectImgSource (); // call function to gather filename / type of location of image file ie local/web/G:S
-// $reqFeatures = collectFeatures () ; // Gather feature image is to be analys3ed for
-// $response = $imageAnnotator->annotateImages($imgSource,$regFeatures)
-$response = $imageAnnotator->labelDetection($image);
+
+//$imgSource = collectImgSource(); // call function to gather filename / type of location of image file ie local/web/G:S
+echo "img data collected preparing to enter collection of features<br/>";
+//$requestedFeatures = [TYPE:LABEL_DECTECTION]; /*collectFeature()*/  // Gather feature image is to be analys3ed for
+$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
+//$image = file_get_contents($fileName);
+ echo "<BR/> regFeatures : ".$requestedFeatures;
+ echo "<BR/> i got so far but i didnt really make it";
+ $requestedFeatures = [TYPE::LABEL_DETECTION];
+ $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
+ //$response = $imageAnnotator->labelDetection($imgSource);
+ /*$response = $imageAnnotator->annotateImages( '{ "requests": [
+     {
+         "image":{"content": $imgSource},
+         "feature":[ { $requestedFeatures}  ]
+     }
+     ]
+    }'
+
+    ); */
+    // $imgSource,$requestedFeatures);
+ echo "<BR/>hay";
 $labels = $response->getLabelAnnotations();
 if ($labels) {
     echo("Labels:" . PHP_EOL."<BR/>");
