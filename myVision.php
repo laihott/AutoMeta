@@ -34,11 +34,13 @@ function collectImgSource () {
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
     //$filex = fopen($fileName,"r") or die ("unable to open file");
-    $contents = file_get_contents($fileName);
-    fclose($fileName);
-    $fileX64 = base64_encode($contents); // convert file based image to basex64
-    $imgJsonX64 =$fileX64;
-    return $imgJsonX64 ;
+   /**$contents = file_get_contents($fileName);
+    *fclose($fileName); 
+    *$fileX64 = base64_encode($contents); // convert file based image to basex64
+    *$imgJsonX64 =$fileX64;
+    * return $imgJsonX64 ;
+    ***************************************/ 
+    return $fileName;   
 }
 
 function collectFeature() {
@@ -87,22 +89,20 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
     *   
     *
     *
-    ************************************************************************   
+    ************************************************************************  */ 
    
 # prepare the image to be annotated
 
-// $image = file_get_contents($fileName);
+//$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
+$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
 
-# performs label detection on the image file
-
-//$imgSource = collectImgSource(); // call function to gather filename / type of location of image file ie local/web/G:S
 
 /****    tempory disabled  *********
 //$requestedFeatures = collectFeature();  // Gather features image is to be analysed for 
 ************************************/
 
 $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::OBJECT_LOCALIZATION, TYPE::SAFE_SEARCH_DETECTION] ;
-$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
+
 
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
@@ -113,6 +113,7 @@ getObjectsResults($response);
 getSafeSearchResults($response);
 
 function getLabelsResults( $response ) {
+    /**  performs label detection on the image file */
     $labels = $response->getLabelAnnotations();
     if ($labels) {
         echo("Labels:" ."<BR/>");
