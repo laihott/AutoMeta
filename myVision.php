@@ -43,20 +43,18 @@ function collectImgSource () {
 
 function collectFeature() {
       
-    //$myFeatures = array();
-    $myFeatures = $_POST["features"];
-    /*$len = count($myFeatures);
-    foreach ($myFeatures as $myx) {
-        $i=0;
-        $strFeature = "TYPE::$myx";
-        echo $strFeature."<BR/>";
-        $tmpx[$i]=$strFeature;
-        $i++;
-    }
-    
-   $strFeature = [ $tmpx(0), $tmpx(1), $tmpx(2), $tmpx(3)];
-    foreach ($tmpx as $x) {echo $x.", ";};*/
-    return $myFeatures;
+    /************************************** 
+    *{
+        *   "type": enum(Type),
+        *   "maxResults": number,
+        *   "model": string
+        *   }
+        *
+        *build a enumlated type variable from variables passed
+        *from previous form $_POST(features)
+        *and convert to type enum
+        * [TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::LABEL_DETECTION, .........]
+    ****************************************/
 }
 
 # instantiates a client
@@ -65,39 +63,32 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
   
    /**************************************************************************
     * 
-    * {
-    *   "type": enum(Type),
-    *   "maxResults": number,
-    *   "model": string
-    *   }
-    *
-    *   FACE_DETECTION 	Run face detection.
-    *   LANDMARK_DETECTION 	Run landmark detection.
-    *   SAFE_SEARCH_DETECTION 	Run Safe Search to detect potentially unsafe or undesirable content.
+    * 
+    *   
+    *   LANDMARK_DETECTION 	- Run landmark detection.
+    *   SAFE_SEARCH_DETECTION -	Run Safe Search to detect 
+    *                           potentially unsafe or undesirable content.
     *   OBJECT_LOCALIZATION
+    *   LABEL_DETECTION
+    *   FACE_DETECTION 	Run face detection.
+    *       "boundingPoly" : - Frame the face detected
+    *       Emotional states detected - from face Detection :
     *
-    * Generate JSON field from supplied options selected and passed vis $_POST
-    *   dectect image labels - LABEL_DETECTION
-    *   detect face - FACE_DETECTION
-    *       Frame the face - "boundingPoly":{}
-    *       emotions : 
-    *                   Joy - joyLikeliHood
-    *                   Sorrow - sorrowLikeliHood
-    *                   Anger - angerLikeliHood
-    *                   Surpise - surpiseLikeliHood
-    *       Headwear - headwearLikeliHood
-    *       Image State :- underExposedLikeliHood
-    *                      blurredLikeliHood
-    *   detect Landmarks - LANDMARK_DETECTION
-    *   object Deteection - OBJECT_DETECTION
-    *   safe image search - SAFE_SEARCH_DETECTION
+    *           joyLikeliHood : 
+    *           sorrowLikeliHood :
+    *           angelLikeliHood :
+    *           surpiseLikeliHood :
+    *           headwearLikeliHood : is subject wearing headwear.
+    *
+    *       Image State Detection : -
+    *           underExposedLikeliHood : 
+    *           blurredLikeliHood :           
+    *       
+    *   
     *
     *
     ************************************************************************   
    
-    *$imgRequestJSON = "{ \"image\": $imgSource }, \"features\":[ { $reqFeatures } ] }"
-    *return $imgRequestJSON */
-
 # prepare the image to be annotated
 
 // $image = file_get_contents($fileName);
@@ -105,43 +96,113 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
 # performs label detection on the image file
 
 //$imgSource = collectImgSource(); // call function to gather filename / type of location of image file ie local/web/G:S
-echo "img data collected preparing to enter collection of features<br/>";
-$requestedFeatures = collectFeature();  // Gather feature image is to be analys3ed for
+
+/****    tempory disabled  *********
+//$requestedFeatures = collectFeature();  // Gather features image is to be analysed for 
+************************************/
+
+$requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::OBJECT_LOCALIZATION, TYPE::SAFE_SEARCH_DETECTION] ;
 $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
-//$image = file_get_contents($fileName);
 
- echo "<BR/> i got so far but i didnt really make it <BR/>";
- //$requestedFeatures = [TYPE::LABEL_DETECTION];
+$response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
- $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
- //$response = $imageAnnotator->labelDetection($imgSource);
- /*$response = $imageAnnotator->annotateImages( '{ "requests": [
-     {
-         "image":{"content": $imgSource},
-         "feature":[ { $requestedFeatures}  ]
-     }
-     ]
-    }'
+getLabelsResults($response);
+getFacesResults($response);
+getLandmarksResults($response);
+getObjectsResults($response);
+getSafeSearchResults($response);
 
-    ); */
-    // $imgSource,$requestedFeatures);
- echo "<BR/>hay";
- $labels = "";
-$labels = $response->getLabelAnnotations();
-if ($labels) {
-    echo("Labels:" . PHP_EOL."<BR/>");
-    foreach ($labels as $label) {
-        echo($label->getDescription())." : Accuracy of ";
-        $prob =$label->getscore();
-        $prob =round(($prob *= 100),2,PHP_ROUND_HALF_UP);
-        echo $prob. " % <BR/>";
-        
-    }
-} else {
-    echo('No label found' . PHP_EOL);
-    $imageAnnotator->close();
+function getLabelsResults( $response ) {
+    $labels = $response->getLabelAnnotations();
+    if ($labels) {
+        echo("Labels:" ."<BR/>");
+        foreach ($labels as $label) {
+            echo($label->getDescription())." : Accuracy of ";
+            $prob =$label->getscore();
+            $prob =round(($prob *= 100),2,PHP_ROUND_HALF_UP);
+            echo $prob. " % <BR/>";
+            
+        }
+    } else {
+        echo("No Labels Detected <br/>");
+
+    } 
+}   /* End of get label results */
+
+function getFacesResults() {
+
+    /**************************************************************************
+     * Faceail Detection supports mulitple faces wihtin an image along wiht the 
+     * associated facail attributes such as emotional state or wearing headwear
+     * FACIL RECOGNITON IS NOT SUPPORTED
+     * *********************************************************************** */
 
 }
+
+function getLandmarksResults ( $response ) {
+
+    $landmarks = $response->getLandmarkAnnotations();
+    echo( "Landmark/s found :". count($landmarks)."<BR/>");
+    foreach ($landmarks as $landmark) {
+        echo ($landmark->getDescription()."<BR/>");
+    }
+
+} /* End of get Landmoark Results */
+
+function getObjectsResults( $response ) {
+
+    /**********************************
+     *  "localalizedObjectAnnotations": 
+     *      "name"
+     *      "score"
+     *      "boundingPoly" : {
+     *          "normalizedVertices":[
+     *              {x,y}, {x,y}, {x,y}, {x,y}] }
+     * 
+     ************************************/
+
+     $objects = $response->getLocalizedObjectAnnotations();
+     if ($objects) {
+         echo(count($objects)." \"objects\" detected in Image");
+        foreach ($objects as $object) {
+            $name = $object->getName();
+            $score = $object->getScore();
+            $vertices = $object->getBoundingPoly()->getNormalizedVertices();
+            echo("Confidence : ". $name.",".$score."<BR/>");
+            print('Normalized bounding polygon vertices :'."<BR/>");
+            foreach ($vertices as $vertex){
+                $vertexX = $vertex->getX();
+                $vertexY = $vertex->getY();
+                echo(" : $vertexX , $vertexY <BR/>");
+            }
+            
+        }
+        print(PHP_EOL);
+     } else {
+         echo (" No objects Detected");
+     }
+}   /* End of get object  results function */
+
+function getSafeSearchResults( $response ){
+
+    $likeliHood = ["Unkown", "Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
+    $safe = $response ->getSafeSearchAnnotation();
+    $adult = $safe->getAdult();
+    $spoof = $safe->getSpoof();
+    $medical = $safe->getMedical();
+    $violence = $safe->getViolence();
+    $racy = $safe->getRacy();
+    echo ("Safe Search Results : <BR/>");
+    echo ("Adult : ".$likeliHood[$adult]."<BR/>");
+    echo ("Spoof : ".$likeliHood[$spoof]."<BR/>");
+    echo ("Medical : ".$likeliHood[$medical]."<BR/>");
+    echo ("Violence : ".$likeliHood[$violence]."<BR/>");
+    echo ("Racy : ".$likeliHood[$racy]."<BR/>");
+
+} /* end of Safe Search Results */
+    $imageAnnotator->close();
+
+
 # [END vision_quickstart]123456
-return $labels;
+return $response;
 ?>
