@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ImageItem>
+    <FileName>
+        #filename
+    </FileName>
+    <Location>
+        #image Location (web/local/GoogleStoage)
+    </Location>
+    <SafeSearch>
+        <Adult>#liklihood of Adult content returned as TYPE[INT]</Adult>
+        <Spoof>#Likelihood of Spoof Content returned as TYPE[INT]</Spoof>
+        <Medical>#Likelihood of Medical content returned as TYPE[INT]</Medical>
+        <Violence>#Likelihood of voilent content retruened as TYPE[INT]</Violence>
+        <Racy>#Likelihoof of racy content returned as TYPE[INT]</Racy>
+    </SafeSearch>
+    <Labels>
+        <LabelIem>
+            <Description>
+                #Description/Label returned by Google Vison
+            </Description>
+            <Accuracy>
+                #Accuracy[TYPE::INT]
+            </Accuracy>
+        </LabelItem
+    </Labels>
+    
+

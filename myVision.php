@@ -159,7 +159,7 @@ function getFacesResults($response) {
         print(PHP_EOL);
         }
     } 
-}
+} /**  End of Get Faces Results */
         /***************************************************
          * 
          *      Draw box arounf faces in progress 
@@ -205,10 +205,13 @@ function getLandmarksResults ( $response ) {
 
     $landmarks = $response->getLandmarkAnnotations();
     echo( "Landmark/s found :". count($landmarks)."<BR/>");
-    foreach ($landmarks as $landmark) {
-        echo ($landmark->getDescription()."<BR/>");
+    if ($landmarks) {
+        foreach ($landmarks as $landmark) {
+            echo ($landmark->getDescription()."<BR/>");
+        } 
+    } else {
+        echo (" no landmarks detected");
     }
-
 } /* End of get Landmoark Results */
 
 function getObjectsResults( $response ) {
