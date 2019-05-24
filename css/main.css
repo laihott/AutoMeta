@@ -41,6 +41,12 @@ button:hover {
   background-color: #4CAF50;
 }
 
+/* Extra styles for delete button */
+.dltbtn {
+  padding: 10px 18px;
+  background-color: rgb(161, 0, 0);
+}
+
 /* Style the horizontal ruler */
 hr {
   border: 1px solid #b1b1b1;

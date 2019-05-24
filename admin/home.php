@@ -7,6 +7,7 @@
 	}
 ?>
 <!DOCTYPE html>
+<?php include('../navbar.php')?>
 <html>
 <head>
 	<title>Home</title>
@@ -15,8 +16,6 @@
 	<link rel="stylesheet" type="text/css" href="/css/formstyle.css"> <!--MUST BE INCLUDED ONLY WITH FILES THAT CONTAIN FORMS-->
 </head>
 <body>
-<?php include('../navbar.php') ?>		
-
 
 	<div class="formheader">
 		<h2>Welcome <?php echo $_SESSION['user']['username']; ?></h2>
@@ -47,7 +46,8 @@
 						<i  style="color: #888;">(<?php echo ucfirst($_SESSION['user']['user_type']); ?>)</i> 
 						<a href="home.php?logout='1'" style="color:red; padding-left:10px;">logout</a>
 						<br>
-						&nbsp; <a href="create_user.php"> + add user</a>
+						&nbsp; <a href="create_user.php" style="color:darkgreen"> + add user</a><br>
+						&nbsp; <a href="delete.php" style="color:#790200"> - delete user</a>
 					</small>
 
 				<?php endif ?>
@@ -55,6 +55,5 @@
 		</div>
 	</div>
 
-<script src="/js/navbar.js"></script>
 </body>
 </html>

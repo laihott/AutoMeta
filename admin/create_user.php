@@ -4,9 +4,9 @@ if (!isAdmin()) {
 	$_SESSION['msg'] = "You must log in first";
 	header('location: ../login.php');
 }
-
 ?>
 <!DOCTYPE html>
+<?php include('../navbar.php');?>
 <html>
 <head>
 	<title>ADMIN LOGIN</title>
@@ -15,7 +15,6 @@ if (!isAdmin()) {
 	<link rel="stylesheet" type="text/css" href="/css/formstyle.css"> <!--MUST BE INCLUDED ONLY WITH FILES THAT CONTAIN FORMS-->
 </head>
 <body>
-<?php include('../navbar.php') ?>		
 
 	<div class="formheader">
 		<h2>Admin - create user</h2>

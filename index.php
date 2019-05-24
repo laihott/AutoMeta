@@ -1,15 +1,13 @@
 <?php include('functions.php') ?>
+<?php include('navbar.php') ?>
 <!DOCTYPE html>
 <html>
 <head>
     <title>AutoMeta</title>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/formstyle.css"> <!--MUST BE INCLUDED ONLY WITH FILES THAT CONTAIN FORMS-->
-
 </head>
 <body>
-<?php include('navbar.php') ?>
 
 <!-- First Parallax Image with Logo Text -->
 <div class="logo" id="main">
@@ -80,6 +78,6 @@
   <p>Powered by <a href="https://www.w3schools.com/w3css/default.asp" title="W3.CSS" target="_blank" class="w3-hover-text-green">w3.css</a></p>
 </footer>
 
-<script src="/js/navbar.js"></script>
+
 </body>
 </html>

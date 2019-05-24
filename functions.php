@@ -8,13 +8,17 @@
 	$username = "";
 	$email    = "";
 	$errors   = array();
-	//$admnbtn = '<a href="/admin/home.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">ADMIN</a>'; // Admin button
-	//$usrbtn = '<a href="/success.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">USER</a>'; // Admin button
 
 	// call the register() function if register_btn is clicked
 	if (isset($_POST['register_btn'])) {
 		register();
 	}
+
+	// call the delete() function if delete_btn is clicked
+	if (isset($_POST['delete_btn'])) {
+		delete();
+	}
+
 
 	// call the login() function if register_btn is clicked
 	if (isset($_POST['login_btn'])) {
@@ -94,6 +98,42 @@
 
 	}
 
+///////////////////////////////////////////////////////////////////////////////
+	// DELETE EXISTING USER
+	function delete(){
+		global $db, $errors;
+
+		// receive all input values from the form
+		$username    =  e($_POST['username']);
+
+		// form validation: ensure that the form is correctly filled
+		if (empty($username)) { 
+			array_push($errors, "Username is required"); 
+		}
+
+	// Checks if the username exists and if the user is an admin
+		if (count($errors) == 0) {
+		$query = "SELECT * FROM users WHERE username='$username'";
+		$results = mysqli_query($db, $query);
+		$query2 = "SELECT * FROM users WHERE username='$username' && user_type='user'";
+		$results2 = mysqli_query($db, $query2);
+		// Checks if the username exists
+		if (mysqli_num_rows($results) == 0) {
+			array_push($errors, "Username doesn't exist.");
+		}
+		elseif (mysqli_num_rows($results2) == 0) {
+			array_push($errors, "<strong><i style='color:black'>$username</i>&nbsp is an admin. Admins can't delete other admins.</strong>");
+		}
+	}
+		// Delete user if there are no errors
+		if (count($errors) == 0) {
+				$query = "DELETE FROM users WHERE username='$username'";
+				mysqli_query($db, $query);
+				array_push($errors, "<strong style='color:green'>User <i style='color:black'>$username</i> deleted successfully.</strong>");
+		}
+
+	}
+//////////////////////////////////////////////////////////////////////////////////
 	// return user array from their id
 	function getUserById($id){
 		global $db;
@@ -182,7 +222,6 @@
 			echo '</div>';
 		}
 	}
-
 
 // Check if user is logged in as admin or basic user or not at all, and display the ADMIN/USER button or nothing
 	function usradmn() {

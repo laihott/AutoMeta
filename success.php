@@ -7,6 +7,7 @@
 	}
 ?>
 <!DOCTYPE html>
+<?php include('navbar.php') ?>
 <html>
 <head>
 	<title>ADMIN LOGIN</title>
@@ -15,8 +16,6 @@
 	<link rel="stylesheet" type="text/css" href="/css/formstyle.css"> <!--MUST BE INCLUDED ONLY WITH FILES THAT CONTAIN FORMS-->
 </head>
 <body>
-<?php include('navbar.php') ?>		
-
 
 	<div class="formheader">
 		<h2>Welcome <?php echo $_SESSION['user']['username']; ?></h2>

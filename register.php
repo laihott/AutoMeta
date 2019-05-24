@@ -1,5 +1,6 @@
 <?php include('functions.php') ?>
 <!DOCTYPE html>
+<?php include('navbar.php') ?>		
 <html>
 <head>
 	<title>ADMIN LOGIN</title>
@@ -8,7 +9,6 @@
 	<link rel="stylesheet" type="text/css" href="/css/formstyle.css"> <!--MUST BE INCLUDED ONLY WITH FILES THAT CONTAIN FORMS-->
 </head>
 <body>
-<?php include('navbar.php') ?>		
 	<div class="formheader">
 		<h2>Register to AutoMeta</h2>
 	</div>
@@ -41,6 +41,5 @@
 			Already a member? <a href="login.php">Sign in</a>
 		</p>
 	</form>
-<script src="/js/navbar.js"></script>
 </body>
 </html>
