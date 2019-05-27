@@ -44,28 +44,6 @@
 <div class="bar">
 </div>
 
-<!-- Container (Upload) -->
-<div class="w3-content w3-container w3-padding-64" id="upload">
-  <div class="w3-center">
-  <h3 class="w3-center">UPLOAD A NEW IMAGE</h3>
-  This is placeholder for uploading new images.
-</div>
-</div>
-
-<!-- Harmaa välipalkki -->
-<div class="bar">
-</div>
-
-<!-- Container (Portfolio Section) -->
-<div class="w3-content w3-container w3-padding-64" id="recent">
-  <h3 class="w3-center">RECENTLY UPLOADED IMAGES</h3>
-  <p class="w3-center">To visit the gallery to see all the images, click <a href="HTML TIEDOSTON NIMI TÄNNE">here</a>.</p>
-</div>
-
-<!-- Harmaa välipalkki -->
-<div class="bar">
-</div>
-
 <!-- Container (About Section) -->
 <div class="w3-content w3-container w3-padding-64" id="about">
   <h3 class="w3-center">ABOUT THIS PROJECT</h3>

@@ -11,7 +11,7 @@
     </a>
     <a href="/index.php#main" class="w3-bar-item w3-button w3-hide-small">MAIN</a>
     <a href="/index.php#help" class="w3-bar-item w3-button w3-hide-small">HELP</a>
-    <a href="/index.php#upload" class="w3-bar-item w3-button w3-hide-small">UPLOAD</a>
+    <a href="/analyze.php" class="w3-bar-item w3-button w3-hide-small">UPLOAD</a>
     <a href="/index.php#recent" class="w3-bar-item w3-button w3-hide-small"></i>RECENTLY UPLOADED</a>
     <a href="/index.php#about" class="w3-bar-item w3-button w3-hide-small"></i>ABOUT</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small"></i>GALLERY</a>
@@ -23,11 +23,11 @@
 
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-    <a href="#main" class="w3-bar-item w3-button" onclick="toggleFunction()">MAIN</a>
-    <a href="#help" class="w3-bar-item w3-button" onclick="toggleFunction()">HELP</a>
-    <a href="#upload" class="w3-bar-item w3-button" onclick="toggleFunction()">UPLOAD</a>
-    <a href="#recent" class="w3-bar-item w3-button" onclick="toggleFunction()">RECENTLY UPLOADED</a>
-    <a href="#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+    <a href="index.php#main" class="w3-bar-item w3-button" onclick="toggleFunction()">MAIN</a>
+    <a href="index.php#help" class="w3-bar-item w3-button" onclick="toggleFunction()">HELP</a>
+    <a href="/analyze.php" class="w3-bar-item w3-button" onclick="toggleFunction()">UPLOAD</a>
+    <a href="index.php#recent" class="w3-bar-item w3-button" onclick="toggleFunction()">RECENTLY UPLOADED</a>
+    <a href="index.php#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
     <a href="HTML TIEDOSTON NIMI TÄNNE" class="w3-bar-item w3-button" onclick="toggleFunction()">GALLERY</a>
     <a href="#" class="w3-bar-item w3-button">Login</a>
     <a href="#" class="w3-bar-item w3-button">Language</a>
