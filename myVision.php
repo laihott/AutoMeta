@@ -47,16 +47,35 @@ function collectFeature() {
       
     /************************************** 
     *{
-        *   "type": enum(Type),
-        *   "maxResults": number,
-        *   "model": string
-        *   }
-        *
-        *build a enumlated type variable from variables passed
-        *from previous form $_POST(features)
-        *and convert to type enum
-        * [TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::LABEL_DETECTION, .........]
+    *   "type": enum(Type),
+    *   "maxResults": number,
+    *   "model": string
+    *   }
+    *build a enumlated type variable from variables passed
+    *from previous form $_POST(features)
+    *and convert to type enum
+    * [TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::LABEL_DETECTION, .........]
     ****************************************/
+        $requestFeatures = $_POST["features"];
+        foreach ($requestFeatures as $requestFeature) {
+            if ($requestFeature="Face") {
+                $feature[]=TYPE::FACE_DECTECTION;
+            }
+            if ($requestFeature="Landmark") {
+                $feature[]=TYPE::LANDMARK_DETECTION;
+            }
+            if ($requestFeature="Label") {
+                $feature[]=TYPE::LABEL_DETECTION;
+            }
+            if ($requestFeature="Object") {
+                $feature[]=TYPE::OBEJECT_DETECTION;
+            }
+            if ($requestFeature="Safe") {
+                $feature[]=TYPE::SAFE_SEARCH_DETECTION;
+            }
+        }
+        return $feature;
+        
 }
 
 function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for image */
@@ -115,8 +134,8 @@ $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
 /****    tempory disabled  *********
 //$requestedFeatures = collectFeature();  // Gather features image is to be analysed for 
 ************************************/
-
-$requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::OBJECT_LOCALIZATION, TYPE::SAFE_SEARCH_DETECTION] ;
+$requestedFeatures = collectFeature();
+//$requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::OBJECT_LOCALIZATION, TYPE::SAFE_SEARCH_DETECTION] ;
 
 
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
@@ -124,7 +143,7 @@ $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 //$xmlFile = generate_XmlFileName($imgSource);
 
 // create the xml document
-$xmlDoc = new DOMDocument('1.0', 'UTF-8');
+//$xmlDoc = new DOMDocument('1.0', 'UTF-8');
 
 // create the root elemenet
 $root = $xmlDoc->appendChild($xmlDoc->createElement("ImageItem"));
@@ -150,13 +169,14 @@ $imgTag->appendChild($xmlDoc->createElement("Location",$loc));
     if ($labels) {
         echo("Labels:" ."<BR/>");
         foreach ($labels as $label) {
+            echo ($Label."<BR/>");
             $prob = $label->getscore();
             $prob = round(($prob *= 100),2,PHP_ROUND_HALF_UP);
             $keyword = $label->getDescription();
-            $imgTag->appendChild($xmlDoc->createElement("Description",$keyword));
-            $imgTag->appendchild($xmlDoc->createAttribute("accuracy"))->appendChild($xmlDoc->createTextNode($prob));
-            $xmlDoc ->formatOutput = true;
-            echo $xmlDoc->saveXML();
+            //$imgTag->appendChild($xmlDoc->createElement("Description",$keyword));
+            //$imgTag->appendchild($xmlDoc->createAttribute("accuracy"))->appendChild($xmlDoc->createTextNode($prob));
+            //$xmlDoc ->formatOutput = true;
+            //echo $xmlDoc->saveXML();
         }
     } else {
         echo("No Labels Detected <br/>");
