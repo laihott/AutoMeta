@@ -10,4 +10,5 @@
 #dynamic php script genertaing gallery
  #thumbnail dynmaic view added display issues to be resolved
  #dynamic php gallery :) :) :)
- 
+ xml taging order sorted - to be incorpated into myVision php
+ possible soultion to request feeatures - coding adding not tested
