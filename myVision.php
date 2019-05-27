@@ -59,6 +59,21 @@ function collectFeature() {
     ****************************************/
 }
 
+function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for image */
+
+    // global $fileNameList;
+    // is image local web or cloud based ??
+    //Following is for local based
+    //take exisiting filename find postion of "."
+    // file name up to "." + xml = imageFilename.xml
+    //return imageFile.xmml
+    $extPos = stripos($imageFileName,".") ;
+    $strImageName = substr($imageFileName,0,$extPos);
+    $xml_imgName = $strImageName.".xml";
+    return $xml_imgName;
+
+}     /** ******* End of collect_XMLFile ****** */
+
 # instantiates a client
 // instantiates new imageannotatorClient with credentails for authorising in .json
 $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json']);
@@ -93,8 +108,8 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
    
 # prepare the image to be annotated
 
-//$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
-$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
+$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
+//$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
 
 
 /****    tempory disabled  *********
@@ -106,30 +121,52 @@ $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMAR
 
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
-getLabelsResults($response);
-getFacesResults($response);
-getLandmarksResults($response);
-getObjectsResults($response);
-getSafeSearchResults($response);
+//$xmlFile = generate_XmlFileName($imgSource);
 
-function getLabelsResults( $response ) {
-    /**  performs label detection on the image file */
+// create the xml document
+$xmlDoc = new DOMDocument('1.0', 'UTF-8');
+
+// create the root elemenet
+$root = $xmlDoc->appendChild($xmlDoc->createElement("ImageItem"));
+
+//create the Image element
+$imgTag = $root->appendChild($xmlDoc->createElement("Image"));
+//create the filename attribute
+$imgTag->appendChild($xmlDoc->createAttribute("filename"))->appendChild($xmlDoc->createTextNode($xmlFile));
+/** <Image filename="filename"> */
+$imgTag->appendChild($xmlDoc->createElement("Location",$loc));
+
+    /** ********** performs label detection on the image *************** *
+     * write output to .xml file
+     * <Labels>
+     *      <LabelItem labelid="$labelID"> // unique id for each label
+     *          <Description accuracy="int">
+     *              #Description/Label returned by Google Vison 
+     *          </Description>
+     *      </LabelItem>
+     *  </Labels>
+     * ******************************************************************/   
     $labels = $response->getLabelAnnotations();
     if ($labels) {
         echo("Labels:" ."<BR/>");
         foreach ($labels as $label) {
-            echo($label->getDescription())." : Accuracy of ";
-            $prob =$label->getscore();
-            $prob =round(($prob *= 100),2,PHP_ROUND_HALF_UP);
-            echo $prob. " % <BR/>";
-            
+            $prob = $label->getscore();
+            $prob = round(($prob *= 100),2,PHP_ROUND_HALF_UP);
+            $keyword = $label->getDescription();
+            $imgTag->appendChild($xmlDoc->createElement("Description",$keyword));
+            $imgTag->appendchild($xmlDoc->createAttribute("accuracy"))->appendChild($xmlDoc->createTextNode($prob));
+            $xmlDoc ->formatOutput = true;
+            echo $xmlDoc->saveXML();
         }
     } else {
         echo("No Labels Detected <br/>");
 
-    } 
-}   /* End of get label results */
-
+    }  /* End of get label results */
+    getSafeSearchResults($response,$xmlFile);
+    getFacesResults($response,$xmlFile);
+    getLandmarksResults($response,$xmlFile);
+    getObjectsResults($response,$xmlFile);
+    
 function getFacesResults($response) {
 
     /**************************************************************************
