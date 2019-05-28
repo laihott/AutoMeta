@@ -1,6 +1,6 @@
 <?php
 namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
-echo "entering php script <BR/>";
+//echo "entering php script <BR/>";
 
 /**
  * Copyright 2016 Google Inc.
@@ -143,6 +143,7 @@ $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 //$xmlFile = generate_XmlFileName($imgSource);
 
 // create the xml document
+header ( "content-type: application/xml; charset=ISO-8859-15");
 $xml = new DOMDocument('1.0', 'UTF-8');
 // create the root elemenet
 $root = $xml->createElement("ImageItem");
