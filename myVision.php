@@ -21,6 +21,10 @@ namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
 require __DIR__ . '/vendor/autoload.php';
 
 // imports the Google Cloud client library
+// use Google\Protobuf\Internal\DescriptorPool;
+use Google\Protobuf\Internal\GPBType;
+use Google\Protobuf\Internal\RepeatedField;
+use Google\Protobuf\Internal\GPBUtil;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 //use Google\Cloud\Vision\V1\Feature;
 use Google\Cloud\Vision\V1\Feature\Type;
@@ -30,13 +34,32 @@ function collectImgSource () {
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
     //$filex = fopen($fileName,"r") or die ("unable to open file");
-   /**$contents = file_get_contents($fileName);
-    *fclose($fileName); 
-    *$fileX64 = base64_encode($contents); // convert file based image to basex64
-    *$imgJsonX64 =$fileX64;
-    * return $imgJsonX64 ;
-    ***************************************/ 
-    return $fileName;   
+    /***************************************/ 
+    echo $fileName."<br/>";
+    if ( strchr($fileName,'http') != FALSE) {
+        $isWeb = TRUE;
+        $isLocal = FALSE;      
+     /*   }  elseif {   
+     *check if it cloud based storage ie google storage (gs://(<-- maybe??))**
+     * $isCloud = TRUE;
+     */
+    } else {
+        /** assume that image is local based then ** */
+        $isLocal = TRUE;
+        $isWeb = FALSE;
+    }
+    if ($isWeb) {
+        return $fileName;
+    }
+    if ($isLocal) {
+        fopen($fileName,'r');
+        $contents = file_get_contents($fileName);
+        //fclose($fileName); // <<<<<< file is left open error to be solved
+        $fileX64 = base64_encode($contents); // convert file based image to basex64
+       
+     return $fileX64 ;
+    }
+       
 }
 
 function collectFeature() {
@@ -121,7 +144,7 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
     *
     ************************************************************************  */ 
    
-# prepare the image to be annotated
+// prepare the image to be annotated
 
 $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
 //$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
@@ -136,9 +159,8 @@ $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMAR
 
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
-    $imageAnnotator->close();
-
-
-# [END vision_quickstart]123456
-return $response;
+$imageAnnotator->close();
+//echo "off to generate xml file now please hold <br/>";
+include ('myVisionXML.php');
+return ;
 ?>
