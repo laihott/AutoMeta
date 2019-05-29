@@ -1,7 +1,5 @@
 <?php
 namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
-echo "entering php script <BR/>";
-
 /**
  * Copyright 2016 Google Inc.
  *
@@ -18,15 +16,17 @@ echo "entering php script <BR/>";
  * limitations under the License.
  */
 
-# [START vision_quickstart]
-# includes the autoloader for libraries installed with composer
 
+// includes the autoloader for libraries installed with composer
 require __DIR__ . '/vendor/autoload.php';
 
-# imports the Google Cloud client library
-
+// imports the Google Cloud client library
+use Google\Protobuf\Internal\DescriptorPool;
+use Google\Protobuf\Internal\GPBType;
+use Google\Protobuf\Internal\RepeatedField;
+use Google\Protobuf\Internal\GPBUtil;
 use Google\Cloud\Vision\V1\ImageAnnotatorClient;
-use Google\Cloud\Vision\V1\Feature;
+//use Google\Cloud\Vision\V1\Feature;
 use Google\Cloud\Vision\V1\Feature\Type;
 
 function collectImgSource () {
@@ -34,30 +34,83 @@ function collectImgSource () {
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
     //$filex = fopen($fileName,"r") or die ("unable to open file");
-   /**$contents = file_get_contents($fileName);
-    *fclose($fileName); 
-    *$fileX64 = base64_encode($contents); // convert file based image to basex64
-    *$imgJsonX64 =$fileX64;
-    * return $imgJsonX64 ;
-    ***************************************/ 
-    return $fileName;   
+    /***************************************/ 
+    echo $fileName."<br/>";
+    if ( strchr($fileName,'http') != FALSE) {
+        $isWeb = TRUE;
+        $isLocal = FALSE;      
+     /*   }  elseif {   
+     *check if it cloud based storage ie google storage (gs://(<-- maybe??))**
+     * $isCloud = TRUE;
+     */
+    } else {
+        /** assume that image is local based then ** */
+        $isLocal = TRUE;
+        $isWeb = FALSE;
+    }
+    if ($isWeb) {
+        return $fileName;
+    }
+    if ($isLocal) {
+        fopen($fileName,'r');
+        $contents = file_get_contents($fileName);
+        //fclose($fileName); // <<<<<< file is left open error to be solved
+        $fileX64 = base64_encode($contents); // convert file based image to basex64
+       
+     return $fileX64 ;
+    }
+       
 }
 
 function collectFeature() {
       
     /************************************** 
     *{
-        *   "type": enum(Type),
-        *   "maxResults": number,
-        *   "model": string
-        *   }
-        *
-        *build a enumlated type variable from variables passed
-        *from previous form $_POST(features)
-        *and convert to type enum
-        * [TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::LABEL_DETECTION, .........]
+    *   "type": enum(Type),
+    *   "maxResults": number,
+    *   "model": string
+    *   }
+    *build a enumlated type variable from variables passed
+    *from previous form $_POST(features)
+    *and convert to type enum
+    * [TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::LABEL_DETECTION, .........]
     ****************************************/
+        $requestFeatures = $_POST["features"];
+        foreach ($requestFeatures as $requestFeature) {
+            if ($requestFeature="Face") {
+                $feature[]=TYPE::FACE_DECTECTION;
+            }
+            if ($requestFeature="Landmark") {
+                $feature[]=TYPE::LANDMARK_DETECTION;
+            }
+            if ($requestFeature="Label") {
+                $feature[]=TYPE::LABEL_DETECTION;
+            }
+            if ($requestFeature="Object") {
+                $feature[]=TYPE::OBEJECT_DETECTION;
+            }
+            if ($requestFeature="Safe") {
+                $feature[]=TYPE::SAFE_SEARCH_DETECTION;
+            }
+        }
+        return $feature;
+        
 }
+
+function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for image */
+
+    // global $fileNameList;
+    // is image local web or cloud based ??
+    //Following is for local based
+    //take exisiting filename find postion of "."
+    // file name up to "." + xml = imageFilename.xml
+    //return imageFile.xmml
+    $extPos = stripos($imageFileName,".") ;
+    $strImageName = substr($imageFileName,0,$extPos);
+    $xml_imgName = $strImageName.".xml";
+    return $xml_imgName;
+
+}     /** ******* End of collect_XMLFile ****** */
 
 # instantiates a client
 // instantiates new imageannotatorClient with credentails for authorising in .json
@@ -91,7 +144,7 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
     *
     ************************************************************************  */ 
    
-# prepare the image to be annotated
+// prepare the image to be annotated
 
 //$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
 $imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
@@ -100,174 +153,13 @@ $imgSource = collectImgSource(); // call function to gather filename & location 
 /****    tempory disabled  *********
 //$requestedFeatures = collectFeature();  // Gather features image is to be analysed for 
 ************************************/
-
+//$requestedFeatures = collectFeature();
 $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::OBJECT_LOCALIZATION, TYPE::SAFE_SEARCH_DETECTION] ;
 
 
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
-getLabelsResults($response);
-getFacesResults($response);
-getLandmarksResults($response);
-getObjectsResults($response);
-getSafeSearchResults($response);
-
-function getLabelsResults( $response ) {
-    /**  performs label detection on the image file */
-    $labels = $response->getLabelAnnotations();
-    if ($labels) {
-        echo("Labels:" ."<BR/>");
-        foreach ($labels as $label) {
-            echo($label->getDescription())." : Accuracy of ";
-            $prob =$label->getscore();
-            $prob =round(($prob *= 100),2,PHP_ROUND_HALF_UP);
-            echo $prob. " % <BR/>";
-            
-        }
-    } else {
-        echo("No Labels Detected <br/>");
-
-    } 
-}   /* End of get label results */
-
-function getFacesResults($response) {
-
-    /**************************************************************************
-     * Faceail Detection supports mulitple faces wihtin an image along wiht the 
-     * associated facail attributes such as emotional state or wearing headwear
-     * FACIL RECOGNITON IS NOT SUPPORTED
-     * *********************************************************************** */
-
-    $faces = $response ->getFaceAnnotations();
-    if ($faces){
-        $likeliHood = ["Unkown", "Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
-        echo ( count($faces). " : faces detected <br/>");
-        foreach ($faces as $face) {
-            $anger = $face->getAngerLikelihood();
-            printf("Anger: " . "<BR/>" .  $likeliHood[$anger]);
-            $joy = $face->getJoyLikelihood();
-            printf("Joy: " . "<BR/>" .  $likeliHood[$joy]);
-            $surprise = $face->getSurpriseLikelihood();
-            printf("Surprise: " . "<BR/>" .  $likeliHood[$surprise]);
-        // get bounds
-            $vertices = $face->getBoundingPoly()->getVertices();
-            $bounds = [];
-            foreach ($vertices as $vertex) {
-                $bounds[] = sprintf((""), $vertex->getX(), $vertex->getY());
-            }
-            print('Bounds: ' . join(', ',$bounds) . PHP_EOL);
-        print(PHP_EOL);
-        }
-    } 
-} /**  End of Get Faces Results */
-        /***************************************************
-         * 
-         *      Draw box arounf faces in progress 
-         *      requires GD extension
-         * 
-         *      # draw box around faces
-         *      if ($faces && $outFile) {
-         *          $imageCreateFunc = [
-         *          'png' => 'imagecreatefrompng',
-         *           'gd' => 'imagecreatefromgd',
-         *           'gif' => 'imagecreatefromgif',
-         *           'jpg' => 'imagecreatefromjpeg',
-         *           'jpeg' => 'imagecreatefromjpeg',
-         *           ];
-         *       $imageWriteFunc = [
-         *           'png' => 'imagepng',
-         *           'gd' => 'imagegd',
-         *           'gif' => 'imagegif',
-         *           'jpg' => 'imagejpeg',
-         *           'jpeg' => 'imagejpeg',
-         *        ];
-         *      copy($path, $outFile);
-         *      $ext = strtolower(pathinfo($path, PATHINFO_EXTENSION));
-         *      if (!array_key_exists($ext, $imageCreateFunc)) {    
-         *               throw new \Exception('Unsupported image extension');
-         *      }
-         *      $outputImage = call_user_func($imageCreateFunc[$ext], $outFile);
-         *     foreach ($faces as $face) {
-         *         $vertices = $face->getBoundingPoly()->getVertices();
-         *           if ($vertices) {
-         *               $x1 = $vertices[0]->getX();
-         *               $y1 = $vertices[0]->getY();
-         *               $x2 = $vertices[2]->getX();
-         *               $y2 = $vertices[2]->getY();
-         *               imagerectangle($outputImage, $x1, $y1, $x2, $y2, 0x00ff00);
-         *           }
-         *       }
-         *       call_user_func($imageWriteFunc[$ext], $outputImage, $outFile);
-         *       printf('Output image written to %s' . "<BR/>" .  $outFile);
-         ***************************************************************************/
-
-function getLandmarksResults ( $response ) {
-
-    $landmarks = $response->getLandmarkAnnotations();
-    echo( "Landmark/s found :". count($landmarks)."<BR/>");
-    if ($landmarks) {
-        foreach ($landmarks as $landmark) {
-            echo ($landmark->getDescription()."<BR/>");
-        } 
-    } else {
-        echo (" no landmarks detected");
-    }
-} /* End of get Landmoark Results */
-
-function getObjectsResults( $response ) {
-
-    /**********************************
-     *  "localalizedObjectAnnotations": 
-     *      "name"
-     *      "score"
-     *      "boundingPoly" : {
-     *          "normalizedVertices":[
-     *              {x,y}, {x,y}, {x,y}, {x,y}] }
-     * 
-     ************************************/
-
-     $objects = $response->getLocalizedObjectAnnotations();
-     if ($objects) {
-         echo(count($objects)." \"objects\" detected in Image");
-        foreach ($objects as $object) {
-            $name = $object->getName();
-            $score = $object->getScore();
-            $vertices = $object->getBoundingPoly()->getNormalizedVertices();
-            echo("Confidence : ". $name.",".$score."<BR/>");
-            print('Normalized bounding polygon vertices :'."<BR/>");
-            foreach ($vertices as $vertex){
-                $vertexX = $vertex->getX();
-                $vertexY = $vertex->getY();
-                echo(" : $vertexX , $vertexY <BR/>");
-            }
-            
-        }
-        print(PHP_EOL);
-     } else {
-         echo (" No objects Detected");
-     }
-}   /* End of get object  results function */
-
-function getSafeSearchResults( $response ){
-
-    $likeliHood = ["Unkown", "Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
-    $safe = $response ->getSafeSearchAnnotation();
-    $adult = $safe->getAdult();
-    $spoof = $safe->getSpoof();
-    $medical = $safe->getMedical();
-    $violence = $safe->getViolence();
-    $racy = $safe->getRacy();
-    echo ("Safe Search Results : <BR/>");
-    echo ("Adult : ".$likeliHood[$adult]."<BR/>");
-    echo ("Spoof : ".$likeliHood[$spoof]."<BR/>");
-    echo ("Medical : ".$likeliHood[$medical]."<BR/>");
-    echo ("Violence : ".$likeliHood[$violence]."<BR/>");
-    echo ("Racy : ".$likeliHood[$racy]."<BR/>");
-
-} /* end of Safe Search Results */
-    $imageAnnotator->close();
-
-
-# [END vision_quickstart]123456
-return $response;
+$imageAnnotator->close();
+include ('myVisionXML.php');
+return ;
 ?>
