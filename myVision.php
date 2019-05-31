@@ -159,8 +159,19 @@ $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMAR
 
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
+<<<<<<< HEAD
 $imageAnnotator->close();
 //echo "off to generate xml file now please hold <br/>";
 include ('myVisionXML.php');
 return ;
+=======
+if ($response) {
+    $imageAnalysed = TRUE;
+} else {
+    $imageAnalysed = FALSE;
+}
+    $imageAnnotator->close();
+echo $imageAnalysed;
+return $response;
+>>>>>>> -
 ?>

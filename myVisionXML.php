@@ -5,7 +5,11 @@ echo "gathering xml data";
 
 // create the xml document
 //header ( "content-type: application/xml; charset=ISO-8859-15");
+<<<<<<< HEAD:myVisionXML.php
 $xml = new DOMDocument();
+=======
+$xml = new DOMDocument('1.0', 'UTF-8');
+>>>>>>> -:myvisionXML.php
 $xml->formatOutput = TRUE;
 // create the root elemenet
 $root = $xml->createElement("ImageItem");
@@ -293,11 +297,16 @@ if ($faces){
         
         $xml->appendChild($xml_fileInfo);
         
+<<<<<<< HEAD:myVisionXML.php
         echo $xml->saveXML();
         //echo "done";
 
         $xml->save('demo.xml');
         
 
+=======
+        //echo $xml->saveXML();
+        $xml->save("test2.xml");
+>>>>>>> -:myvisionXML.php
 
 ?>;

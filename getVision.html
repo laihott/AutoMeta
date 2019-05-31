@@ -7,22 +7,26 @@
         </div>
         <div align=right id ="imgOptions"> 
             </div>
-                <form method="POST" action="myVision.php">
+                <form method="POST" action="myvisionXML.php">
             <fieldset>
                 <legend> Analytical Options :</legend>
                     
-                            <input type="checkbox" name="features[]" Value="TYPE::LABEL_DETECTION" >Labels<BR/>
-                            <input type="checkbox" name="features[]" Value="TYPE::FACE_DETECTION" > face dectection<BR/>
+                            <input type="checkbox" name="features[]" Value="label" >Labels<BR/>
+                            <input type="checkbox" name="features[]" Value="face" > face dectection<BR/>
 
-                            <input type="checkbox" name="features[]" Value="TYPE::LANDMARK_DETECTION" >Landmark Detection<BR/>
-                            <input type="checkbox" name="features[]" Value="TYPE::SAFE_SEARCH_DETECTION" >Safe search<BR/>
+                            <input type="checkbox" name="features[]" Value="landmark" >Landmark Detection<BR/>
+                            <input type="checkbox" name="features[]" Value="safe" >Safe search<BR/>
                         
             </fieldset>
             
         
         
             <input type="text" name="imgName"> : File Name <br/>
+<<<<<<< HEAD
             <button type="button"  onclick="myFunction()">Analyze</button>
+=======
+            <input type="submit"  name="Submit">
+>>>>>>> -
         </form>
         <div id="demo">
             analyzed contents to go here

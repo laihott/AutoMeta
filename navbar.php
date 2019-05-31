@@ -18,7 +18,11 @@
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal">Language</a>
     <a href="/register.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-green">Sign up</a>
     <a href="/login.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">Login</a>
+<<<<<<< HEAD
     <?php usradmn()?> <!--Calls the function to check if AMDMIN/USER button is displayed or not-->
+=======
+    <!--<?php usradmn()?> --> <!--Calls the function to check if AMDMIN/USER button is displayed or not-->
+>>>>>>> -
   </div>
 
   <!-- Navbar on small screens -->

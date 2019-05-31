@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <?php 
 	include('functions.php');
 
@@ -7,6 +8,20 @@
 ?>
 <?php include('navbar.php') ?>  <!----->
 <!DOCTYPE html>
+=======
+<!DOCTYPE html>
+<?php 
+/**	include('functions.php');
+*
+*	if (!isLoggedIn()) {
+ *       header('location: login.php');
+*	} */
+    //include('navbar.php') 
+    include ("myVision.php");
+    $imageAnalysed = FALSE;
+    
+?> 
+>>>>>>> -
 <html>
 <head>
     <title>AutoMeta</title>
@@ -35,6 +50,7 @@
 </div>
 
 <!-- Keyword container -->
+<<<<<<< HEAD
 <div class="keywordbox w3-center">
     <h3>KEYWORDS:</h3>
     <div id="keywordlist">
@@ -42,6 +58,31 @@
     </div>
 </div>
 
+=======
+<?php if (!$imageAnalysed) : ?>
+<form method="POST" action="myvisionXML.php">
+            <fieldset>
+                <legend> Analytical Options :</legend>
+                    
+                            <input type="checkbox" name="features[]" Value="label" >Labels<BR/>
+                            <input type="checkbox" name="features[]" Value="face" > face dectection<BR/>
+                            <input type="checkbox" name="features[]" Value="landmark" >Landmark Detection<BR/>
+                            <input type="checkbox" name="features[]" Value="safe" >Safe search<BR/> 
+            </fieldset>
+            <input type="text" name="imgName"> : File Name <br/>
+            <input type="submit"  name="Submit">
+        </form>
+<?php endif;
+if ($imageAnalysed) : ?>
+<div class="keywordbox w3-center">
+    <h3>KEYWORDS:</h3>
+    <div id="keywordlist">
+	    xml data goes here ion list form
+        List the keywords in this div
+    </div>
+</div>
+<?php endif; ?>
+>>>>>>> -
 <button class="uploadto">Upload to...</button>
 <button class="uploadto">Save XML</button>
 
@@ -58,4 +99,8 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Drag and droppiin liittyvä-->
 <script src="/js/upload.js"></script> <!--Drag and droppiin liittyvä-->
 </body>
+<<<<<<< HEAD
 </html>
+=======
+</html>
+>>>>>>> -

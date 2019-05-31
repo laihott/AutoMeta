@@ -2,6 +2,7 @@
 
 header ( "content-type: application/xml; charset=ISO-8859-15");
 $xml = new DOMDocument();
+$xml->formatOutput = TRUE;
 
 
 $root = $xml->createElement( "ImageItem") ; // create the root
@@ -94,5 +95,7 @@ $xml_fileInfo->appendchild($xml_face);
 
 $xml->appendChild($xml_fileInfo);
 
-echo $xml->saveXML();
+file_put_contents(__DIR__.'/xmlfile.xml',$xml->saveXML());
+//echo $xml->saveXML();
+
 ?>
