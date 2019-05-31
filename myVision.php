@@ -146,8 +146,8 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
    
 // prepare the image to be annotated
 
-//$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
-$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
+$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
+//$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
 
 
 /****    tempory disabled  *********

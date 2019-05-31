@@ -25,3 +25,4 @@
  throws safe search error on local file
  web based still analyse success
  
+ possible soultion to request feeatures - coding adding not tested
