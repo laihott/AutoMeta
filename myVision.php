@@ -21,7 +21,7 @@ namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
 require __DIR__ . '/vendor/autoload.php';
 
 // imports the Google Cloud client library
-use Google\Protobuf\Internal\DescriptorPool;
+// use Google\Protobuf\Internal\DescriptorPool;
 use Google\Protobuf\Internal\GPBType;
 use Google\Protobuf\Internal\RepeatedField;
 use Google\Protobuf\Internal\GPBUtil;
@@ -158,6 +158,7 @@ $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMAR
 
 
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
+
 
 $imageAnnotator->close();
 include ('myVisionXML.php');

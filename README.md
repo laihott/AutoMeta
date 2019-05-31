@@ -12,6 +12,7 @@
  #dynamic php gallery :) :) :)
  xml taging order sorted - to be incorpated into myVision php
  possible soultion to request feeatures - coding adding not tested
+ 
  xml output to file added.
  xmltag.php generates template xml file
  template.xml  is xml template file for reference 
@@ -25,4 +26,4 @@
  throws safe search error on local file
  web based still analyse success
  
- possible soultion to request feeatures - coding adding not tested
+

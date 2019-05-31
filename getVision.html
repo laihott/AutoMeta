@@ -7,24 +7,83 @@
         </div>
         <div align=right id ="imgOptions"> 
             </div>
-                <form method="POST" action="myVision.php">
+                <form method="POST" action="myvisionXML.php">
             <fieldset>
                 <legend> Analytical Options :</legend>
                     
-                            <input type="checkbox" name="features[]" Value="TYPE::LABEL_DETECTION" >Labels<BR/>
-                            <input type="checkbox" name="features[]" Value="TYPE::FACE_DETECTION" > face dectection<BR/>
+                            <input type="checkbox" name="features[]" Value="label" >Labels<BR/>
+                            <input type="checkbox" name="features[]" Value="face" > face dectection<BR/>
 
-                            <input type="checkbox" name="features[]" Value="TYPE::LANDMARK_DETECTION" >Landmark Detection<BR/>
-                            <input type="checkbox" name="features[]" Value="TYPE::SAFE_SEARCH_DETECTION" >Safe search<BR/>
+                            <input type="checkbox" name="features[]" Value="landmark" >Landmark Detection<BR/>
+                            <input type="checkbox" name="features[]" Value="safe" >Safe search<BR/>
                         
             </fieldset>
             
         
         
             <input type="text" name="imgName"> : File Name <br/>
-            <input type="text" name="imgUrl"> : Url link <br/>
-            <input type="text" name="imgCloud"> : CLoud Link <br/>
-            <input type="submit"  name="Submit">
+            <button type="button"  onclick="myFunction()">Analyze</button>
         </form>
+        <div id="demo">
+            analyzed contents to go here
+        </div>
+    <script >
+    
+    function displayXml(xml){
+
+        var xmlDoc=xml.responseXML;
+        var x = xmlDoc.getElementsByTagName("Keywords");
+        var xx = x[0].childNodes;
+        var myList = "<ul>";
+            for (i=0; i<xx.length; i++) {
+                if (xx[i].nodeType == 1) {
+       myList += "<li>" + xx[i].innerHTML + "</li>";
+     }
+                //myList +="<li>" + xx[i].nodeValue + "</li>";
+            }
+        myList +="</ul><br/> File Annalsyed succesfully";
+        document.getElementById("demo").innerHTML = myList;
+
+    }
+
+    function loadfile() {
+    var clientXml = new XMLHttpRequest;
+    if (window.XMLHttpRequest) {
+      // code for IE7+, Firefox, Chrome, Opera, Safari
+      clientXml = new XMLHttpRequest();
+    } else {  // code for IE6, IE5
+      clientXml = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    
+    
+    clientXml.onreadystatechange = function() {
+      if (this.readyState == 4 && this.status == 200) {
+       /*document.getElementById("keywordList").innerHTML = this.responseText;*/ 
+       displayXml(this);
+      } else  { 
+        document.getElementById("inAppError").innerHTML = "file status : readystate : " + this.statusText ; 
+      }
+    }
+    clientXml.open("GET","demo.xml");
+    clientXml.send();
+  }
+
+    function myFunction() {
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState== 4 && this.status == 200) {   
+                document.getElementById("demo").innerHTML = "Image analysed Succesfully";
+                loadfile();
+            }
+
+        };
+        xhttp.open("POST","myVision.php",true);
+        xhttp.send();
+
+    }
+
+    </script>
+
     </body>
+
 </html>
