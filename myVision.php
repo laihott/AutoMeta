@@ -38,7 +38,8 @@ function collectImgSource () {
     echo $fileName."<br/>";
     if ( strchr($fileName,'http') != FALSE) {
         $isWeb = TRUE;
-        $isLocal = FALSE;      
+        $isLocal = FALSE;  
+        return $fileName;    
      /*   }  elseif {   
      *check if it cloud based storage ie google storage (gs://(<-- maybe??))**
      * $isCloud = TRUE;
@@ -48,23 +49,39 @@ function collectImgSource () {
         $isLocal = TRUE;
         $isWeb = FALSE;
     }
-    if ($isWeb) {
-        return $fileName;
-    }
+    /*if ($isWeb) {
+      *  return $fileName;
+    *}*/
     if ($isLocal) {
         fopen($fileName,'r');
         $contents = file_get_contents($fileName);
-        //fclose($fileName); // <<<<<< file is left open error to be solved
+        fclose($fileName); // <<<<<< file is left open error to be solved
         $fileX64 = base64_encode($contents); // convert file based image to basex64
-       
      return $fileX64 ;
-    }
-       
+    }    
 }
 
 function collectFeature() {
       
-    /************************************** 
+    /************************************************************************** 
+    *   LANDMARK_DETECTION 	- Run landmark detection.
+    *   SAFE_SEARCH_DETECTION -	Run Safe Search to detect 
+    *                           potentially unsafe or undesirable content.
+    *   OBJECT_LOCALIZATION
+    *   LABEL_DETECTION
+    *   FACE_DETECTION 	Run face detection.
+    *       "boundingPoly" : - Frame the face detected
+    *       Emotional states detected - from face Detection :
+    *           joyLikeliHood : 
+    *           sorrowLikeliHood :
+    *           angelLikeliHood :
+    *           surpiseLikeliHood :
+    *           headwearLikeliHood : is subject wearing headwear.
+    *       Image State Detection : -
+    *           underExposedLikeliHood : 
+    *           blurredLikeliHood :           
+    *
+    ************************************************************************ 
     *{
     *   "type": enum(Type),
     *   "maxResults": number,
@@ -74,7 +91,8 @@ function collectFeature() {
     *from previous form $_POST(features)
     *and convert to type enum
     * [TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::LABEL_DETECTION, .........]
-    ****************************************/
+    *************************************************************************************/
+
         $requestFeatures = $_POST["features"];
         foreach ($requestFeatures as $requestFeature) {
             if ($requestFeature="Face") {
@@ -115,39 +133,9 @@ function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for 
 # instantiates a client
 // instantiates new imageannotatorClient with credentails for authorising in .json
 $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json']);
-  
-   /**************************************************************************
-    * 
-    * 
-    *   
-    *   LANDMARK_DETECTION 	- Run landmark detection.
-    *   SAFE_SEARCH_DETECTION -	Run Safe Search to detect 
-    *                           potentially unsafe or undesirable content.
-    *   OBJECT_LOCALIZATION
-    *   LABEL_DETECTION
-    *   FACE_DETECTION 	Run face detection.
-    *       "boundingPoly" : - Frame the face detected
-    *       Emotional states detected - from face Detection :
-    *
-    *           joyLikeliHood : 
-    *           sorrowLikeliHood :
-    *           angelLikeliHood :
-    *           surpiseLikeliHood :
-    *           headwearLikeliHood : is subject wearing headwear.
-    *
-    *       Image State Detection : -
-    *           underExposedLikeliHood : 
-    *           blurredLikeliHood :           
-    *       
-    *   
-    *
-    *
-    ************************************************************************  */ 
-   
-// prepare the image to be annotated
 
-$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
-//$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
+//$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
+$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
 
 
 /****    tempory disabled  *********
@@ -156,11 +144,11 @@ $imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";
 //$requestedFeatures = collectFeature();
 $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::OBJECT_LOCALIZATION, TYPE::SAFE_SEARCH_DETECTION] ;
 
-
+// prepare the image to be annotated
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
-
 $imageAnnotator->close();
+//echo "off to generate xml file now please hold <br/>";
 include ('myVisionXML.php');
 return ;
 ?>

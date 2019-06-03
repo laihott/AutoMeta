@@ -1,5 +1,10 @@
 <?php
+echo "gathering xml data";
+//include 'myVision.php';
+//$xmlFile = generate_XmlFileName($imgSource);
+
 // create the xml document
+//header ( "content-type: application/xml; charset=ISO-8859-15");
 $xml = new DOMDocument('1.0', 'UTF-8');
 $xml->formatOutput = TRUE;
 // create the root elemenet
@@ -284,16 +289,17 @@ if ($faces){
         $xml_fileInfo->appendChild($xml_landmark);
         $xml_fileInfo->appendChild($xml_object);
         $xml_fileInfo->appendchild($xml_face);
-
         $xml_fileInfo->appendChild($xml_keyword);
+        
         $xml->appendChild($xml_fileInfo);
+        
         echo $xml->saveXML();
-        $xml->saveXML();
-        $xml->save('demo.xml'); 
-       
         //echo "done";
+
+        $xml->save('demo.xml');
         
 
+        //echo $xml->saveXML();
+        $xml->save("test2.xml");
 
-?>
-
+?>;
