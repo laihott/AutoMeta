@@ -293,13 +293,12 @@ if ($faces){
         
         $xml->appendChild($xml_fileInfo);
         
-        echo $xml->saveXML();
-        //echo "done";
-
-        $xml->save('demo.xml');
         
-
-        //echo $xml->saveXML();
-        $xml->save("test2.xml");
+        //echo "done";
+        $xml->saveXML();
+        $xml->save('demo.xml');
+        echo"done";
+        return $xml;
+       
 
 ?>;

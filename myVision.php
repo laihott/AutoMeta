@@ -1,5 +1,6 @@
 <?php
 namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
+echo "entering myVision.php <br/>";
 /**
  * Copyright 2016 Google Inc.
  *
@@ -30,12 +31,14 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature\Type;
 
 function collectImgSource () {
-    $fileName = $_POST["imgName"]; // collect fime name/url passed from form
+    $fileName = $_FILES['file']['name'];
+    //$fileName = $_POST["imgName"]; // collect fime name/url passed from form
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
     //$filex = fopen($fileName,"r") or die ("unable to open file");
     /***************************************/ 
-    echo $fileName."<br/>";
+    //$fileName = "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg" ; // test image 2
+    echo "fileName past in is  :".$fileName."<br/>";
     if ( strchr($fileName,'http') != FALSE) {
         $isWeb = TRUE;
         $isLocal = FALSE;  
@@ -53,9 +56,10 @@ function collectImgSource () {
       *  return $fileName;
     *}*/
     if ($isLocal) {
-        fopen($fileName,'r');
+        $fileName = __DIR__ . "/uploads/$fileName";
+        //fopen($dir.$fileName,'r');
         $contents = file_get_contents($fileName);
-        fclose($fileName); // <<<<<< file is left open error to be solved
+        //fclose($fileName); // <<<<<< file is left open error to be solved
         $fileX64 = base64_encode($contents); // convert file based image to basex64
      return $fileX64 ;
     }    
@@ -134,8 +138,11 @@ function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for 
 // instantiates new imageannotatorClient with credentails for authorising in .json
 $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json']);
 
+
 //$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
+
 $imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
+
 
 
 /****    tempory disabled  *********
@@ -146,9 +153,8 @@ $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMAR
 
 // prepare the image to be annotated
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
-
 $imageAnnotator->close();
-//echo "off to generate xml file now please hold <br/>";
+echo "off to generate xml file now please hold <br/>";
 include ('myVisionXML.php');
 return ;
 ?>

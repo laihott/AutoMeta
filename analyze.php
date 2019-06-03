@@ -4,15 +4,16 @@
 	/*if (!isLoggedIn()) {
   *      header('location: login.php');
 	}*/
+    include('navbar.php') 
 ?>
-<?php include('navbar.php') ?>  <!----->
+<?php ?>  <!----->
 <!DOCTYPE html>
 <html>
 <head>
     <title>AutoMeta</title>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" href="/css/upload.css">
+    <link rel="stylesheet" type="text/css" href="css/upload.css">
 
 </head>
 <body>
@@ -20,7 +21,7 @@
 <!-- Container for title and info -->
 <div class="w3-padding-64">
     <div class="w3-center" style="margin-bottom:50px;">
-    <h3 class="w3-center">ANALYZE & UPLOAD A NEW IMAGE</h3>
+    <h1 class="w3-center">ANALYZE & UPLOAD A NEW IMAGE</h1>
     Here you can analyze and upload your images.
     </div>
 
@@ -31,6 +32,8 @@
           <p>or</p>
           <p><input type="button" value="Select File" onclick="file_explorer();"></p> <!--Näkyvä nappi joka avaa file explorerin-->
           <input type="file" id="selectfile"> <!--Select file nappi joka on piilotetty-->
+          <p>or</p>
+          <input type="text" name="imgName" value="paste URL here">
         </div>
 </div>
 
@@ -39,10 +42,10 @@
     <h3>KEYWORDS:</h3>
     <div id="keywordlist">
         List the keywords in this div
-    </div>
+    </div> <!--close keywordlist div -->
 </div>
-
-<button class="uploadto">Upload to...</button>
+<p> <i>Display filename here ...... </i></p>
+<button class ="uploadto" type="button" onclick="myFunction()">Analyse Image</button>
 <button class="uploadto">Save XML</button>
 
 </div>
@@ -56,6 +59,7 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Drag and droppiin liittyvä-->
-<script src="/js/upload.js"></script> <!--Drag and droppiin liittyvä-->
+<script src="js/upload.js"></script> <!--Drag and droppiin liittyvä-->
+<script src="js/visionXml.js"></script>
 </body>
 </html>

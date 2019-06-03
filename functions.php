@@ -28,7 +28,7 @@
 	if (isset($_GET['logout'])) {
 		session_destroy();
 		unset($_SESSION['user']);
-		header("location: /login.php");
+		header("location: login.php");
 	}
 
 	// REGISTER USER
@@ -80,7 +80,7 @@
 						  VALUES('$username', '$email', '$user_type', '$password')";
 				mysqli_query($db, $query);
 				$_SESSION['success']  = "New user successfully created!!";
-				header('location: /admin/home.php');
+				header('location: admin/home.php');
 			}else{
 				$query = "INSERT INTO users (username, email, user_type, password) 
 						  VALUES('$username', '$email', 'user', '$password')";
@@ -91,7 +91,7 @@
 
 				$_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
 				$_SESSION['success']  = "You are now logged in";
-				header('location: /success.php');				
+				header('location: success.php');				
 			}
 
 		}
@@ -174,12 +174,12 @@
 
 					$_SESSION['user'] = $logged_in_user;
 					$_SESSION['success']  = "You are now logged in";
-					header('location: /admin/home.php');		  
+					header('location: admin/home.php');		  
 				}else{
 					$_SESSION['user'] = $logged_in_user;
 					$_SESSION['success']  = "You are now logged in";
 
-					header('location: /success.php');
+					header('location: success.php');
 				}
 			}else {
 				array_push($errors, "Wrong username/password combination");
@@ -225,8 +225,8 @@
 
 // Check if user is logged in as admin or basic user or not at all, and display the ADMIN/USER button or nothing
 	function usradmn() {
-			$admnbtn = '<a href="/admin/home.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">ADMIN</a>'; // Admin button
-			$usrbtn = '<a href="/success.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">USER</a>'; // Admin button
+			$admnbtn = '<a href="admin/home.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">ADMIN</a>'; // Admin button
+			$usrbtn = '<a href="success.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">USER</a>'; // Admin button
 			if (isAdmin() == true){
 				echo $admnbtn;
 			}

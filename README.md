@@ -26,4 +26,9 @@
  throws safe search error on local file
  web based still analyse success
  
-
+ 03/06
+intregreated the drop n drop exploer ajax upload page 
+from the main site 
+to accept the file requwest for google vision
+**bugs not fully accepting uploaded files /url unklnow untested.**
+keyword are ouputed to side pane correctly (when using hard coded url link)

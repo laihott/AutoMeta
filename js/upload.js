@@ -10,7 +10,7 @@
   var fileobj;
   function upload_file(e) {
     e.preventDefault();
-    for (i = 0;i<e.dataTransfer.files.lenght; i++){
+    for (i = 0;i<e.dataTransfer.files.length; i++){
     fileobj = e.dataTransfer.files[i];
     ajax_file_upload(fileobj);
   }
