@@ -36,7 +36,7 @@ clientXml.onreadystatechange = function() {
     document.getElementById("keywordlist").innerHTML = "file status : readystate : " + this.statusText ; 
   }
 }
-clientXml.open("GET","demo.xml");
+clientXml.open("GET","demo.xml",true);
 clientXml.send();
 }
 

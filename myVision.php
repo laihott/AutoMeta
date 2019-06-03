@@ -31,8 +31,12 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature\Type;
 
 function collectImgSource () {
-    $fileName = $_FILES['file']['name'];
-    //$fileName = $_POST["imgName"]; // collect fime name/url passed from form
+     if ( isset($_FILES['file']['name']) ) :
+        $fileName =($_FILES['files']['name']);
+        else :
+            $fileName = $_POST["imgName"]; // collect fime name/url passed from form
+        endif;
+        echo $fileName;
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
     //$filex = fopen($fileName,"r") or die ("unable to open file");
@@ -99,20 +103,20 @@ function collectFeature() {
 
         $requestFeatures = $_POST["features"];
         foreach ($requestFeatures as $requestFeature) {
-            if ($requestFeature="Face") {
-                $feature[]=TYPE::FACE_DECTECTION;
+            if ($requestFeature="face") {
+                $feature[] +=TYPE::FACE_DECTECTION;
             }
-            if ($requestFeature="Landmark") {
-                $feature[]=TYPE::LANDMARK_DETECTION;
+            if ($requestFeature="landmark") {
+                $feature[]+=TYPE::LANDMARK_DETECTION;
             }
-            if ($requestFeature="Label") {
-                $feature[]=TYPE::LABEL_DETECTION;
+            if ($requestFeature="label") {
+                $feature[]+=TYPE::LABEL_DETECTION;
             }
-            if ($requestFeature="Object") {
-                $feature[]=TYPE::OBEJECT_DETECTION;
+            if ($requestFeature="object") {
+                $feature[]+=TYPE::OBEJECT_DETECTION;
             }
-            if ($requestFeature="Safe") {
-                $feature[]=TYPE::SAFE_SEARCH_DETECTION;
+            if ($requestFeature="safe") {
+                $feature[]+=TYPE::SAFE_SEARCH_DETECTION;
             }
         }
         return $feature;
@@ -138,23 +142,21 @@ function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for 
 // instantiates new imageannotatorClient with credentails for authorising in .json
 $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json']);
 
+$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
 
-//$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
+//$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
 
-$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
-
-
-
-/****    tempory disabled  *********
+/****    tempory disabled  *********/
 //$requestedFeatures = collectFeature();  // Gather features image is to be analysed for 
-************************************/
+/************************************/
 //$requestedFeatures = collectFeature();
 $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMARK_DETECTION, TYPE::OBJECT_LOCALIZATION, TYPE::SAFE_SEARCH_DETECTION] ;
 
 // prepare the image to be annotated
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
-$imageAnnotator->close();
+
 echo "off to generate xml file now please hold <br/>";
 include ('myVisionXML.php');
+$imageAnnotator->close();
 return ;
 ?>

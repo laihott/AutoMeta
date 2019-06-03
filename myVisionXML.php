@@ -1,7 +1,5 @@
 <?php
 echo "gathering xml data";
-//include 'myVision.php';
-//$xmlFile = generate_XmlFileName($imgSource);
 
 // create the xml document
 //header ( "content-type: application/xml; charset=ISO-8859-15");

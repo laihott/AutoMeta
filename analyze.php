@@ -44,7 +44,7 @@
         List the keywords in this div
     </div> <!--close keywordlist div -->
 </div>
-<p> <i>Display filename here ...... </i></p>
+<p id="filename"> <i>Display filename here ...... </i></p>
 <button class ="uploadto" type="button" onclick="myFunction()">Analyse Image</button>
 <button class="uploadto">Save XML</button>
 
