@@ -40,6 +40,11 @@ clientXml.send();
 }
 
 function anaylseVisionCall() {
+  let json = JSON.stringify ({
+    fileName : document.getElementById("fileNameInput").value,
+    Request : "label,landscape,face,object,safe"
+  })
+  //formData.append(fileName,fileInputName.value)
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState== 4 && this.status == 200) {   
@@ -47,11 +52,12 @@ function anaylseVisionCall() {
             loadfile();
         }
 
-    };
-    var imgNameSent = document.getElementById("fileNameInput").value;
+    };  
     xhttp.open("POST","myVision.php",true);
+    //xhttp.setRequestHeader('Content-type', 'application/json; charset=utf-8');
     //document.getElementById("demo").innerHTML = "Analying image please wait......";
     /*xhttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");*/
-    xhttp.send(imgNameSent);
+
+    xhttp.send(json);
 
 }

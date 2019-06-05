@@ -30,16 +30,22 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature\Type;
 
 function collectImgSource () {
-        $fileName =$_FILES['file']['name'];  
-        //$fileName = $_POST["imgName"]; // collect fime name/url passed from form
+    $fileName = "";
+    $isLocal = FALSE;
+    $isWeb = FALSE;
+    if (isset($_FILE['file']['name'])) :
+        $fileName =$_FILES['file']['name']; 
+    endif ;
+    if (isset($_POST["imgName"])) :
+        $fileName = $_POST["imgName"]; // collect fime name/url passed from form
+    endif;
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
     //$filex = fopen($fileName,"r") or die ("unable to open file");
     /***************************************/ 
     //$fileName = "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg" ; // test image 2
     if ( strchr($fileName,'http') != FALSE) {
-        $isWeb = TRUE;
-        $isLocal = FALSE;  
+        $isWeb = TRUE; 
         return $fileName;    
      /*   }  elseif {   
      *check if it cloud based storage ie google storage (gs://(<-- maybe??))**
@@ -47,8 +53,9 @@ function collectImgSource () {
      */
     } else {
         /** assume that image is local based then ** */
-        $isLocal = TRUE;
-        $isWeb = FALSE;
+        if ($fileName) :
+            $isLocal = TRUE;
+        endif;
     }
     /*if ($isWeb) {
       *  return $fileName;
@@ -124,6 +131,10 @@ $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-2345
 //$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
 $imgSource = "";
 $imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
+if ($imgSource =="" ) :
+    echo "No file detected";
+    return;
+endif;
 
 /****    tempory disabled  *********/
 //$requestedFeatures = collectFeature();  // Gather features image is to be analysed for 
@@ -135,7 +146,7 @@ $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMAR
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
 echo "off to generate xml file now please hold <br/>";
-include ('myVisionXML.php');
+include "myVisionXML.php";
 $imageAnnotator->close();
 return ;
 ?>

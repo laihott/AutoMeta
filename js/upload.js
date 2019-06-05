@@ -20,17 +20,17 @@
     document.getElementById('selectfile').click();
     document.getElementById('selectfile').onchange = function() {
         fileobj = document.getElementById('selectfile').files[0];
-      ajax_file_upload(fileobj);
+      ajax_file_upload(fileobj,"ajax.php");
     };
   }
  
-  function ajax_file_upload(file_obj) {
+  function ajax_file_upload(file_obj,action) {
     if(file_obj != undefined) {
         var form_data = new FormData();                  
         form_data.append('file', file_obj);
       $.ajax({
         type: 'POST',
-        url: 'ajax.php',
+        url: action,
         contentType: false,
         processData: false,
         data: form_data,

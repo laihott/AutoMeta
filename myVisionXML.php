@@ -1,5 +1,4 @@
 <?php
-echo "gathering xml data";
 
 // create the xml document
 //header ( "content-type: application/xml; charset=ISO-8859-15");
@@ -295,9 +294,15 @@ if ($faces){
         
         //echo "done";
         include "gen_xmlFileName.php";
-        $xml_outFile = generate_XmlFileName($_FILES['file']['name']);
+        if (isset($_FILES['file']['name'])) :
+            $xml_outFile = generate_XmlFileName($_FILES['file']['name']);
+        elseif (isset($_POST["imgName"])) :
+                $xml_outFile = generate_XmlFileName($_POST["imgName"]);
+        else : 
+            $xml_outFile = "demo.xml";
+        endif;
         $xml->saveXML();
-        $xml->save(__DIR__.'/'.$xml_outFile);
+        $xml->save(__DIR__.'/gallery/'.$xml_outFile);
         echo"done";
         return $xml;
        
