@@ -4,6 +4,7 @@
 	if (!isLoggedIn()) {
 		header('location: login.php');
 	}
+
 ?>
 <!DOCTYPE html>
 <?php include('navbar.php') ?>
@@ -20,7 +21,18 @@
 		<h2>Welcome <?php echo $_SESSION['user']['username']; ?></h2>
 	</div>
 	<div class="content">
-		<!-- notification message -->
+
+	<!-- Notification for successful verifying of email address-->
+	<?php if (isset($_SESSION['message'])): ?>
+        <div class="error <?php echo $_SESSION['type'] ?>">
+          <?php
+            echo $_SESSION['message'];
+            unset($_SESSION['message']);
+            unset($_SESSION['type']);
+          ?>
+        </div>
+		<?php endif;?>		
+		<!-- Notification for successful login -->
 		<?php if (isset($_SESSION['success'])) : ?>
 			<div class="error success" >
 				<h3>
@@ -30,7 +42,19 @@
 					?>
 				</h3>
 			</div>
-		<?php endif ?>
+		<?php endif ?>		
+<!-- Notification if the user hasn't verified his/hers email address-->
+		<?php if (!$_SESSION['verified']): ?>
+          <div class="error">
+            You need to verify your email address!
+            Sign into your email account and click
+            on the verification link sent to your e-mail address.
+          </div>
+        <?php else: ?>
+          <button class="btn">I'm verified!!!</button>
+        <?php endif;?>
+
+
 		<!-- logged in user information -->
 		<div class="profile_info">
 
@@ -47,10 +71,7 @@
 				<?php endif ?>
 			</div>
 		</div>
-
-
-
-		
 	</div>
+
 </body>
 </html>

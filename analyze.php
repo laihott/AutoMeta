@@ -3,7 +3,10 @@
 
 	if (!isLoggedIn()) {
         header('location: login.php');
-	}
+  }
+  elseif (isLoggedIn() && $_SESSION['verified'] == FALSE) {
+    header('location: success.php');
+  }
 ?>
 <?php include('navbar.php') ?>
 <!DOCTYPE html>

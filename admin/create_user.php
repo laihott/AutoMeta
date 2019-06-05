@@ -52,6 +52,7 @@ if (!isAdmin()) {
 		<div class="input-group">
 			<button type="submit" class="loginbtn" name="register_btn"> + Create user</button>
 		</div>
+		<a href="home.php">< Back to admin homepage</a>
 	</form>
 </body>
 </html>
