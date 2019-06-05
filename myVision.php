@@ -31,11 +31,9 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature\Type;
 
 function collectImgSource () {
-     if ( isset($_FILES['file']['name']) ) :
-        $fileName =($_FILES['files']['name']);
-        else :
-            $fileName = $_POST["imgName"]; // collect fime name/url passed from form
-        endif;
+    
+        $fileName =$_FILES['file']['name'];  
+        //$fileName = $_POST["imgName"]; // collect fime name/url passed from form
         echo $fileName;
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
@@ -142,9 +140,9 @@ function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for 
 // instantiates new imageannotatorClient with credentails for authorising in .json
 $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json']);
 
-$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
-
-//$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
+//$imgSource = "https://images.pexels.com/photos/257540/pexels-photo-257540.jpeg";  //test image
+$imgSource = "";
+$imgSource = collectImgSource(); // call function to gather filename & location of image file ie local/web/G:S
 
 /****    tempory disabled  *********/
 //$requestedFeatures = collectFeature();  // Gather features image is to be analysed for 

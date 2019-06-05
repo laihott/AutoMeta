@@ -5,18 +5,20 @@
   *      header('location: login.php');
 	}*/
     include('navbar.php') 
-?>
-<?php ?>  <!----->
+?>  
 <!DOCTYPE html>
 <html>
+
 <head>
-    <title>AutoMeta</title>
+  
+<title>AutoMeta</title>
     <meta charset="UTF-8">
     <meta content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="css/upload.css">
 
 </head>
 <body>
+
 
 <!-- Container for title and info -->
 <div class="w3-padding-64">
@@ -33,7 +35,7 @@
           <p><input type="button" value="Select File" onclick="file_explorer();"></p> <!--Näkyvä nappi joka avaa file explorerin-->
           <input type="file" id="selectfile"> <!--Select file nappi joka on piilotetty-->
           <p>or</p>
-          <input type="text" name="imgName" value="paste URL here">
+          <input type="text" id="fileNameInput" name="imgName" value="">
         </div>
 </div>
 
@@ -45,7 +47,7 @@
     </div> <!--close keywordlist div -->
 </div>
 <p id="filename"> <i>Display filename here ...... </i></p>
-<button class ="uploadto" type="button" onclick="myFunction()">Analyse Image</button>
+<button class ="uploadto" type="button" onclick="anaylseVisionCall()">Analyse Image</button>
 <button class="uploadto">Save XML</button>
 
 </div>
