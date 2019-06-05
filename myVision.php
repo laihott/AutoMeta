@@ -1,6 +1,5 @@
 <?php
 namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
-echo "entering myVision.php <br/>";
 /**
  * Copyright 2016 Google Inc.
  *
@@ -31,16 +30,13 @@ use Google\Cloud\Vision\V1\ImageAnnotatorClient;
 use Google\Cloud\Vision\V1\Feature\Type;
 
 function collectImgSource () {
-    
         $fileName =$_FILES['file']['name'];  
         //$fileName = $_POST["imgName"]; // collect fime name/url passed from form
-        echo $fileName;
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
     //$filex = fopen($fileName,"r") or die ("unable to open file");
     /***************************************/ 
     //$fileName = "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg" ; // test image 2
-    echo "fileName past in is  :".$fileName."<br/>";
     if ( strchr($fileName,'http') != FALSE) {
         $isWeb = TRUE;
         $isLocal = FALSE;  
@@ -120,21 +116,6 @@ function collectFeature() {
         return $feature;
         
 }
-
-function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for image */
-
-    // global $fileNameList;
-    // is image local web or cloud based ??
-    //Following is for local based
-    //take exisiting filename find postion of "."
-    // file name up to "." + xml = imageFilename.xml
-    //return imageFile.xmml
-    $extPos = stripos($imageFileName,".") ;
-    $strImageName = substr($imageFileName,0,$extPos);
-    $xml_imgName = $strImageName.".xml";
-    return $xml_imgName;
-
-}     /** ******* End of collect_XMLFile ****** */
 
 # instantiates a client
 // instantiates new imageannotatorClient with credentails for authorising in .json

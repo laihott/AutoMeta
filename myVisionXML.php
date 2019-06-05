@@ -28,33 +28,34 @@ function addKeyword($keywordItem) {
 }
 
 //function getSafeSearchResults( $response ){
-$likeliHood = ["Unkown", "Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
-$safe = $response ->getSafeSearchAnnotation();
-$adult = $safe->getAdult();
-$spoof = $safe->getSpoof();
-$medical = $safe->getMedical();
-$violence = $safe->getViolence();
-$racy = $safe->getRacy();
-//generate XML safe Search Branch
-$xml_safeSearch = $xml->createElement("Safe_Search");
-if ($adult>3) : addKeyword("adult"); endif;
-$xml_safeSearch->setAttribute("Adult",$likeliHood[$adult]);
-if ($spoof>3) : addKeyword("spoof"); endif;
-$xml_safeSearch->setAttribute("Spoof",$likeliHood[$spoof]);
-if ($medical>3) : addKeyword("Medical"); endif;
-$xml_safeSearch->setAttribute("Medical",$likeliHood[$medical]);
-if ($violence>3) : addKeyword("Violence"); endif;
-$xml_safeSearch->setAttribute("Violence",$likeliHood[$violence]);
-if ($racy>3) : addKeyWord("Racy"); endif;
-$xml_safeSearch->setAttribute("Racy",$likeliHood[$racy]);
-$xml_fileInfo->appendChild($xml_safeSearch);
-/** echo ("Safe Search Results : <BR/>");
-*echo ("Adult : ".$likeliHood[$adult]."<BR/>");
-*echo ("Spoof : ".$likeliHood[$spoof]."<BR/>");
-*echo ("Medical : ".$likeliHood[$medical]."<BR/>");
-*echo ("Violence : ".$likeliHood[$violence]."<BR/>");
-*echo ("Racy : ".$likeliHood[$racy]."<BR/>"); */
-
+    $safe = $response ->getSafeSearchAnnotation(); 
+    if ($safe) :
+        $likeliHood = ["Unkown", "Very Unlikely", "Unlikely", "Possible", "Likely", "Very Likely"];
+        $adult = $safe->getAdult();
+        $spoof = $safe->getSpoof();
+        $medical = $safe->getMedical();
+        $violence = $safe->getViolence();
+        $racy = $safe->getRacy();
+        //generate XML safe Search Branch
+        $xml_safeSearch = $xml->createElement("Safe_Search");
+        if ($adult>3) : addKeyword("adult"); endif;
+        $xml_safeSearch->setAttribute("Adult",$likeliHood[$adult]);
+        if ($spoof>3) : addKeyword("spoof"); endif;
+        $xml_safeSearch->setAttribute("Spoof",$likeliHood[$spoof]);
+        if ($medical>3) : addKeyword("Medical"); endif;
+        $xml_safeSearch->setAttribute("Medical",$likeliHood[$medical]);
+        if ($violence>3) : addKeyword("Violence"); endif;
+        $xml_safeSearch->setAttribute("Violence",$likeliHood[$violence]);
+        if ($racy>3) : addKeyWord("Racy"); endif;
+        $xml_safeSearch->setAttribute("Racy",$likeliHood[$racy]);
+        $xml_fileInfo->appendChild($xml_safeSearch);
+        /** echo ("Safe Search Results : <BR/>");
+        *echo ("Adult : ".$likeliHood[$adult]."<BR/>");
+        *echo ("Spoof : ".$likeliHood[$spoof]."<BR/>");
+        *echo ("Medical : ".$likeliHood[$medical]."<BR/>");
+        *echo ("Violence : ".$likeliHood[$violence]."<BR/>");
+        *echo ("Racy : ".$likeliHood[$racy]."<BR/>"); */
+    endif ; 
 /******************************************************************** */
 /**************end of Safe Search Results *****************************/
 /******************************************************************** */
@@ -293,8 +294,10 @@ if ($faces){
         
         
         //echo "done";
+        include "gen_xmlFileName.php";
+        $xml_outFile = generate_XmlFileName($_FILES['file']['name']);
         $xml->saveXML();
-        $xml->save('demo.xml');
+        $xml->save(__DIR__.'/'.$xml_outFile);
         echo"done";
         return $xml;
        
