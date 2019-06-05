@@ -13,6 +13,10 @@
 <div class="w3-content w3-container w3-padding-64">
 <h2 class="w3-center">Gallery</h2>
 
+<div class="w3-center">
+<input type="text" placeholder="Search images with keywords, such as 'dog'" style="padding:6px;margin:10px 20% 30px 20%; width:50%;">
+</div>
+
 <div class="row">
   <div class="column">
     <img src="img_nature.jpg" style="width:100%" onclick="openModal();currentSlide(1)" class="hover-shadow cursor">
