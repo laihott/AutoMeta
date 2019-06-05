@@ -2,7 +2,7 @@
 window.onscroll = function() {myFunction()};
 function myFunction() {
     var navbar = document.getElementById("myNavbar");
-    if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 10) {
+    if (document.body.scrollTop > 1 || document.documentElement.scrollTop > 1) {
         navbar.className = "w3-bar" + " w3-card" + " w3-animate-top" + " w3-white";
     } else {
         navbar.className = navbar.className.replace(" w3-card w3-animate-top w3-white", "");

@@ -9,16 +9,16 @@
   <div class="w3-bar" id="myNavbar">
     <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
     </a>
-    <a href="/index.php#main" class="w3-bar-item w3-button w3-hide-small">MAIN</a>
-    <a href="/index.php#help" class="w3-bar-item w3-button w3-hide-small">HELP</a>
+    <a href="/#main" class="w3-bar-item w3-button w3-hide-small">MAIN</a>
+    <a href="/#help" class="w3-bar-item w3-button w3-hide-small">HELP</a>
     <a href="/analyze.php" class="w3-bar-item w3-button w3-hide-small">UPLOAD</a>
-    <a href="/index.php#recent" class="w3-bar-item w3-button w3-hide-small"></i>RECENTLY UPLOADED</a>
-    <a href="/index.php#about" class="w3-bar-item w3-button w3-hide-small"></i>ABOUT</a>
-    <a href="#" class="w3-bar-item w3-button w3-hide-small"></i>GALLERY</a>
+    <a href="/#recent" class="w3-bar-item w3-button w3-hide-small"></i>RECENTLY UPLOADED</a>
+    <a href="/#about" class="w3-bar-item w3-button w3-hide-small"></i>ABOUT</a>
+    <a href="/gallery/galleryimgs/" class="w3-bar-item w3-button w3-hide-small"></i>GALLERY</a>
     <a href="#" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-teal">Language</a>
     <a href="/register.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-green">Sign up</a>
     <a href="/login.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-red">Login</a>
-    <?php usradmn()?> <!--Calls the function to check if AMDMIN/USER button is displayed or not-->
+    <?php usradmn()?> <!--Calls the function to check if ADMIN/USER button is displayed or not-->
   </div>
 
   <!-- Navbar on small screens -->
