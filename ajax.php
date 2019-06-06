@@ -14,8 +14,8 @@ move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . $_FILES['file']['na
 //move_uploaded_file($_FILES['file']['tmp_name'], 'uploads/' . time() . '_' . $_FILES['file']['name']);
 
  
-echo "File uploaded successfully.";
+//echo "File uploaded successfully.";
 
-echo " image being analsyed please wait...";
+
 include ('myVision.php');
 ?>

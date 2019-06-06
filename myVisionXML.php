@@ -296,15 +296,25 @@ if ($faces){
         include "gen_xmlFileName.php";
         if (isset($_FILES['file']['name'])) :
             $xml_outFile = generate_XmlFileName($_FILES['file']['name']);
-        elseif (isset($_POST["imgName"])) :
-                $xml_outFile = generate_XmlFileName($_POST["imgName"]);
-        else : 
-            $xml_outFile = "demo.xml";
         endif;
-        $xml->saveXML();
-        $xml->save(__DIR__.'/gallery/'.$xml_outFile);
-        echo"done";
-        return $xml;
+        if (isset($_POST["file"])) :
+                $xml_outFile = generate_XmlFileName($_POST["file"]);
+        endif;
+        if (!isset($_FILES['file']['name']) && !isset($_POST["file"]) ) :
+             $xml_outFile = "demo.xml";
+        endif;
+        $xml->saveXML(); //
+        //$userGallery to be added path to user gallery
+        $dir = __DIR__.'/gallery/'; 
+        $xml->save($dir.$xml_outFile);
+        //return $xml;
+        $dataresponse = array(
+            'status' => 'success',
+            'name' => $xml_outFile,
+            'path' => $dir
+        ) ;
+        echo (json_encode($dataresponse));
+        exit();
        
 
 ?>;

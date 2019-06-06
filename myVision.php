@@ -33,17 +33,15 @@ function collectImgSource () {
     $fileName = "";
     $isLocal = FALSE;
     $isWeb = FALSE;
-    if (isset($_FILE['file']['name'])) :
+    if (isset($_FILES['file']['name'])) :
         $fileName =$_FILES['file']['name']; 
     endif ;
-    if (isset($_POST["imgName"])) :
-        $fileName = $_POST["imgName"]; // collect fime name/url passed from form
+    if (isset($_POST["file"])) :
+        $fileName = $_POST["file"]; // collect fime name/url passed from form
     endif;
     // check if file name is local web url or GS archieved image
     // if local image convert to BASE64(?)
-    //$filex = fopen($fileName,"r") or die ("unable to open file");
-    /***************************************/ 
-    //$fileName = "https://images.pexels.com/photos/104827/cat-pet-animal-domestic-104827.jpeg" ; // test image 2
+    
     if ( strchr($fileName,'http') != FALSE) {
         $isWeb = TRUE; 
         return $fileName;    
@@ -61,9 +59,11 @@ function collectImgSource () {
       *  return $fileName;
     *}*/
     if ($isLocal) {
-        $fileName = __DIR__ . "/uploads/$fileName";
+        if ($isLocal && !($_POST["file"]) ) :
+            $fileName = __DIR__ . "/uploads/$fileName";
+        endif;
         //fopen($dir.$fileName,'r');
-        $contents = file_get_contents($fileName);
+        $contents = file_get_contents($fileName,false);
         //fclose($fileName); // <<<<<< file is left open error to be solved
         $fileX64 = base64_encode($contents); // convert file based image to basex64
      return $fileX64 ;
@@ -145,8 +145,7 @@ $requestedFeatures = [TYPE::LABEL_DETECTION, TYPE::FACE_DETECTION, TYPE::LANDMAR
 // prepare the image to be annotated
 $response = $imageAnnotator->annotateImage($imgSource,$requestedFeatures);
 
-echo "off to generate xml file now please hold <br/>";
 include "myVisionXML.php";
 $imageAnnotator->close();
-return ;
+
 ?>

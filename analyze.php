@@ -61,7 +61,9 @@
 </footer>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Drag and droppiin liittyvä-->
+<script src="js/xmloutput.js"></script>
 <script src="js/upload.js"></script> <!--Drag and droppiin liittyvä-->
 <script src="js/visionXml.js"></script>
+
 </body>
 </html>

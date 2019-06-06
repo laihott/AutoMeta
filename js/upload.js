@@ -20,7 +20,7 @@
     document.getElementById('selectfile').click();
     document.getElementById('selectfile').onchange = function() {
         fileobj = document.getElementById('selectfile').files[0];
-      ajax_file_upload(fileobj,"ajax.php");
+      ajax_file_upload(fileobj,'ajax.php');
     };
   }
  
@@ -34,10 +34,24 @@
         contentType: false,
         processData: false,
         data: form_data,
+        //dataType: 'json',
         success:function(response) {
-          alert(response);
-          $('#selectfile').val('');
+          if (response['status']=='invalid') {
+            //invlaid file format
+            $("#err").html("Invalid File!").fadeIn();
+          }
+          else {
+            var name= response['name'];
+            //view upload file.
+            $("#preview").html('<img src="' +response['path']+'">').fadeIn();
+            $("#file_name").html(response).fadeIn();
+            //$("#form")[0].rest();
+            loadfile(response['path'],response['name']);
+          }
+          //alert(response);
+          //$('#selectfile').val('');
         }
       });
     }
+
   }

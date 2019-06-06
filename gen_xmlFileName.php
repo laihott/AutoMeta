@@ -8,6 +8,12 @@ function generate_XmlFileName ($imageFileName){ /** Generates .xML filename for 
 // file name up to "." + xml = imageFilename.xml
 //return imageFile.xmml
 
+if (strchr($imageFileName,'/')) :
+//if ( strchr($imageFileName,'http') != FALSE) :
+    $lastSlash = 1 + strripos ($imageFileName,'/');
+    $imageFileName = substr ($imageFileName,$lastSlash);
+endif;
+
 $extPos = stripos($imageFileName,".") ;
 $strImageName = substr($imageFileName,0,$extPos);
 $xml_imgName = $strImageName.".xml";
