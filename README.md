@@ -32,3 +32,8 @@ from the main site
 to accept the file requwest for google vision
 **bugs not fully accepting uploaded files /url unklnow untested.**
 keyword are ouputed to side pane correctly (when using hard coded url link)
+url images analysed successfully
+xml file generated succesfully for all images
+xml file saved to gallery
+for local images no return from google vision - xml file generated tags are empty.
+drag and drop function not working in firefox - local images.
