@@ -15,7 +15,10 @@ function displayXml(xml){
 
 }
 
-function loadfile(file,path) {
+function loadfile(path,file) {
+  // NOTE path is returned as /var/www/html
+  // hard code path to "correct" value
+  path = 'gallery/';
 var clientXml; //= new XMLHttpRequest;
 if (window.XMLHttpRequest) {
   // code for IE7+, Firefox, Chrome, Opera, Safari

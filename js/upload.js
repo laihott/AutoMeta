@@ -36,17 +36,20 @@
         data: form_data,
         //dataType: 'json',
         success:function(response) {
-          if (response['status']=='invalid') {
+          // response is returned as JSON string
+          // convert to object using JSON.parse
+          var obj_response = JSON.parse(response);
+          if (obj_response.status=='invalid') {
             //invlaid file format
             $("#err").html("Invalid File!").fadeIn();
           }
           else {
-            var name= response['name'];
+            var name= obj_response.name;
             //view upload file.
-            $("#preview").html('<img src="' +response['path']+'">').fadeIn();
+            $("#preview").html('<img src="' +obj_response.path+'">').fadeIn();
             $("#file_name").html(response).fadeIn();
             //$("#form")[0].rest();
-            loadfile(response['path'],response['name']);
+            loadfile(obj_response.path,obj_response.name);
           }
           //alert(response);
           //$('#selectfile').val('');
