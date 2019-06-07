@@ -291,8 +291,6 @@ if ($faces){
         
         $xml->appendChild($xml_fileInfo);
         
-        
-        //echo "done";
         include "gen_xmlFileName.php";
         if (isset($_FILES['file']['name'])) :
             $xml_outFile = generate_XmlFileName($_FILES['file']['name']);
@@ -303,9 +301,13 @@ if ($faces){
         if (!isset($_FILES['file']['name']) && !isset($_POST["file"]) ) :
              $xml_outFile = "demo.xml";
         endif;
-        $xml->saveXML(); //
-        //$userGallery to be added path to user gallery
-        $dir = __DIR__.'/gallery/'; 
+        $xml->saveXML(); 
+
+        //-------add customizable user galler path here -----
+        //$userGallery to be added -- path to user gallery --
+        
+        $userGallery = "/gallery/";
+        $dir = __DIR__.$userGallery; 
         $xml->save($dir.$xml_outFile);
         //return $xml;
         $dataresponse = array(

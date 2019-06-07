@@ -1,7 +1,7 @@
 <?php
 namespace Google\Cloud\Samples\Auth;  /**** must be first line in code *****/
 /**
- * Copyright 2016 Google Inc.
+ * Copyright 2019
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -124,7 +124,6 @@ function collectFeature() {
         
 }
 
-# instantiates a client
 // instantiates new imageannotatorClient with credentails for authorising in .json
 $imageAnnotator =new ImageAnnotatorClient(['credentials'=>__DIR__.'/autopro-234567.json']);
 
