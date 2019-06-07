@@ -10,7 +10,7 @@
   var fileobj;
   function upload_file(e) {
     e.preventDefault();
-    for (i = 0;i<e.dataTransfer.files.lenght; i++){
+    for (i = 0;i<e.dataTransfer.files.length; i++){
     fileobj = e.dataTransfer.files[i];
     ajax_file_upload(fileobj);
   }
@@ -20,24 +20,41 @@
     document.getElementById('selectfile').click();
     document.getElementById('selectfile').onchange = function() {
         fileobj = document.getElementById('selectfile').files[0];
-      ajax_file_upload(fileobj);
+      ajax_file_upload(fileobj,'ajax.php');
     };
   }
  
-  function ajax_file_upload(file_obj) {
+  function ajax_file_upload(file_obj,action) {
     if(file_obj != undefined) {
         var form_data = new FormData();                  
         form_data.append('file', file_obj);
       $.ajax({
         type: 'POST',
-        url: 'ajax.php',
+        url: action,
         contentType: false,
         processData: false,
         data: form_data,
+        //dataType: 'json',
         success:function(response) {
-          alert(response);
-          $('#selectfile').val('');
+          // response is returned as JSON string
+          // convert to object using JSON.parse
+          var obj_response = JSON.parse(response);
+          if (obj_response.status=='invalid') {
+            //invlaid file format
+            $("#err").html("Invalid File!").fadeIn();
+          }
+          else {
+            var name= obj_response.name;
+            //view upload file.
+            $("#preview").html('<img src="' +obj_response.path+'">').fadeIn();
+            $("#file_name").html(response).fadeIn();
+            //$("#form")[0].rest();
+            loadfile(obj_response.path,obj_response.name);
+          }
+          //alert(response);
+          //$('#selectfile').val('');
         }
       });
     }
+
   }

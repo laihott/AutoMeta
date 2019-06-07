@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        
+       <div align="left" id="imgPlaceholder">
+        <img src="url"  style="width:300px; height:200px" alt="image placeholder">
+        </div>
+        <div align=right id ="imgOptions"> 
+            </div>
+                <form method="POST" action="myvisionXML.php">
+            <fieldset>
+                <legend> Analytical Options :</legend>
+                    
+                            <input type="checkbox" name="features[]" Value="label" >Labels<BR/>
+                            <input type="checkbox" name="features[]" Value="face" > face dectection<BR/>
+
+                            <input type="checkbox" name="features[]" Value="landmark" >Landmark Detection<BR/>
+                            <input type="checkbox" name="features[]" Value="safe" >Safe search<BR/>
+                        
+            </fieldset>
+            
+        
+        
+            <input type="text" name="imgName"> : File Name <br/>
+            <button type="button"  onclick="anaylseVisionCall()">Analyze</button>
+        </form>
+        <div id="keywordlist">
+            analyzed contents to go here
+        </div>
+    
+    <script src="js/visionXml.js"></script>
+
+    </body>
+
+</html>

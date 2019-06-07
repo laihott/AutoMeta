@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Image fileName="ImageFileName" location="FileImageLocation(local/web/GS">
+  <Safe_Search Adult="Very Unlikely" Spoof="Unlikely" Medical="Very Unlikely" Violence="Very Unlikely" Racy="Very Unlikely"/>
+  <Labels>
+    <labelItem accuracy="99.5">Cat</labelItem>
+    <labelItem accuracy="96.98">Small to medium-sized cats</labelItem>
+    <labelItem accuracy="96.86">Whiskers</labelItem>
+    <labelItem accuracy="96.12">Felidae</labelItem>
+    <labelItem accuracy="91.55">Eye</labelItem>
+    <labelItem accuracy="87.83">Close-up</labelItem>
+    <labelItem accuracy="86.34">Snout</labelItem>
+    <labelItem accuracy="84.2">Nose</labelItem>
+    <labelItem accuracy="83.98">Siberian</labelItem>
+    <labelItem accuracy="81.98">Iris</labelItem>
+  </Labels>
+  <Landmarks/>
+  <Objects>
+    <objectItem accuracy="86.59">Cat<vertices verticesXY="0.11000001,0.9968235"/></objectItem>
+    <objectItem accuracy="56.12">Animal<vertices verticesXY="0.11000001,0.9968235"/></objectItem>
+  </Objects>
+  <faces/>
+  <Keywords>
+    <KeyItem>Cat</KeyItem>
+    <KeyItem>Small to medium-sized cats</KeyItem>
+    <KeyItem>Whiskers</KeyItem>
+    <KeyItem>Felidae</KeyItem>
+    <KeyItem>Eye</KeyItem>
+    <KeyItem>Close-up</KeyItem>
+    <KeyItem>Snout</KeyItem>
+    <KeyItem>Nose</KeyItem>
+    <KeyItem>Siberian</KeyItem>
+    <KeyItem>Iris</KeyItem>
+    <KeyItem>Cat</KeyItem>
+    <KeyItem>Animal</KeyItem>
+  </Keywords>
+</Image>

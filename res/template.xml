@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ImageItem>
+    <Image filename="filename">
+        <Location> #location of filename </Location>
+        <SafeSearch>
+            <Adult>#Liklihood of Adult content returned as TYPE[INT]</Adult>
+            <Spoof>#Likelihood of Spoof Content returned as TYPE[INT]</Spoof>
+            <Medical>#Likelihood of Medical content returned as TYPE[INT]</Medical>
+            <Violence>#Likelihood of voilent content retruened as TYPE[INT]</Violence>
+            <Racy>#Likelihood of racy content returned as TYPE[INT]</Racy>
+        </SafeSearch>
+        <Labels>
+            <LabelItem labelid="$labelID"> // unique id for each label
+                <Description Accuracy="int">
+                   #Description/Label returned by Google Vison 
+                </Description>
+            </LabelItem>
+        </Labels>
+        <Landmarks>
+            <LandmarkItem id="landmarkID">
+                <Description Accuracy="int">
+                    #Description/Label of Landmark returned by google vision
+                </Description>
+            </LandmarkItem>
+        </Landmarks>
+        <Objects>
+            <ObjectItem id="objectId">
+                <Description Accuracy="int">
+                     #Description of object returned by google vision 
+                </Description>
+                <BoundingVertices>
+                    #Bounding Vertices of Object [(x,y),(x1,y1),(x2,y2),(x3,y3)] 
+                </BoundingVertices>
+            </ObjectItem>
+        </Objects>
+        <Faces>
+            <FaceObject id="faceID">
+                <EmotionalLikelihood>
+                    <Anger> #Likelihood of Anger </Anger>    
+                    <Joy>   #Likelihood of Joy </Joy>    
+                    <Sorrow>    #Likelihood of Sorrow </Sorrow>
+                    <Surpise>   #Likelihood of Surpise </Surpise>
+                    <Headwear>  #Likelihood of Headwear </Headwear>
+                    <OverExposed>   #Likelihood of OverExposed </OverExposed>
+                    <Blurred>   #Likelihood of Blurred </Blurred>
+                </EmotionalLikelihood>
+                <BoundingVertices>
+                    <vertices> #Bounding Vertices of Face [(x,y),(x1,y1),(x2,y2),(x3,y3)] </vertices>
+                </BoundingVertices>
+            </FaceObject>
+        </Faces>
+    </Image>
+</ImageItem>
+
+
+    
+

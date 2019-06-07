@@ -1,5 +1,6 @@
+
 <?php
-$target_dir = "uploads/";
+$target_dir = "gallery/";
 $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
 $uploadOk = 1;
 $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
@@ -7,27 +8,27 @@ $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
 if(isset($_POST["submit"])) {
     $check = getimagesize($_FILES["fileToUpload"]["tmp_name"]);
     if($check !== false) {
-        echo "File is an image - " . $check["mime"] . ".<br>";
+        echo "File is an image - " . $check["mime"] . ".<br/>";
         $uploadOk = 1;
     } else {
-        echo "File is not an image.<br>";
+        echo "File is not an image.";
         $uploadOk = 0;
     }
 }
-// Check if file already exists !THIS NEEDS TO BE REMOVED BEFORE RELEASE, CAN'T LIMIT UPLOADING IMAGES WITH THE SAME NAME!
+// Check if file already exists
 if (file_exists($target_file)) {
-    echo "Sorry, file already exists.<br>";
+    echo "Sorry, file already exists.";
     $uploadOk = 0;
 }
 // Check file size
 if ($_FILES["fileToUpload"]["size"] > 500000) {
-    echo "Sorry, your file is too large.<br>";
+    echo "Sorry, your file is too large.";
     $uploadOk = 0;
 }
 // Allow certain file formats
 if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg"
 && $imageFileType != "gif" ) {
-    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.<br>";
+    echo "Sorry, only JPG, JPEG, PNG & GIF files are allowed.";
     $uploadOk = 0;
 }
 // Check if $uploadOk is set to 0 by an error
@@ -36,15 +37,9 @@ if ($uploadOk == 0) {
 // if everything is ok, try to upload file
 } else {
     if (move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
-        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.<br>";
+        echo "The file ". basename( $_FILES["fileToUpload"]["name"]). " has been uploaded.";
     } else {
-        echo "Sorry, there was an error uploading your file.<br>";
+        echo "Sorry, there was an error uploading your file.";
     }
-}
-// Send the user back to upload page
-if ($uploadOk == 1) {
-header("Location: upload.html?upload1"); // Adds ?upload1 string to URL if image upload is successful
-} else {
-    header("Location: upload.html?upload0"); // Adds ?upload0 string to URL if image upload is NOT successful
 }
 ?>

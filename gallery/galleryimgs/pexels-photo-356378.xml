@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Image fileName="ImageFileName" location="FileImageLocation(local/web/GS">
+  <Safe_Search Adult="Very Unlikely" Spoof="Very Unlikely" Medical="Very Unlikely" Violence="Very Unlikely" Racy="Very Unlikely"/>
+  <Labels>
+    <labelItem accuracy="99.54">Dog</labelItem>
+    <labelItem accuracy="98.9">Mammal</labelItem>
+    <labelItem accuracy="98.51">Vertebrate</labelItem>
+    <labelItem accuracy="98.38">Dog breed</labelItem>
+    <labelItem accuracy="98.14">Canidae</labelItem>
+    <labelItem accuracy="90.21">German spitz mittel</labelItem>
+    <labelItem accuracy="89.75">Volpino italiano</labelItem>
+    <labelItem accuracy="88.35">Carnivore</labelItem>
+    <labelItem accuracy="88.13">Japanese spitz</labelItem>
+    <labelItem accuracy="85.34">Samoyed</labelItem>
+  </Labels>
+  <Landmarks/>
+  <Objects>
+    <objectItem accuracy="94.89">Dog<vertices verticesXY="0.09729414,0.9972941"/></objectItem>
+    <objectItem accuracy="72.18">Animal<vertices verticesXY="0.09729414,0.9972941"/></objectItem>
+  </Objects>
+  <faces/>
+  <Keywords>
+    <KeyItem>Dog</KeyItem>
+    <KeyItem>Mammal</KeyItem>
+    <KeyItem>Vertebrate</KeyItem>
+    <KeyItem>Dog breed</KeyItem>
+    <KeyItem>Canidae</KeyItem>
+    <KeyItem>German spitz mittel</KeyItem>
+    <KeyItem>Volpino italiano</KeyItem>
+    <KeyItem>Carnivore</KeyItem>
+    <KeyItem>Japanese spitz</KeyItem>
+    <KeyItem>Samoyed</KeyItem>
+    <KeyItem>Dog</KeyItem>
+    <KeyItem>Animal</KeyItem>
+  </Keywords>
+</Image>

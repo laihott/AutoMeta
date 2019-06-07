@@ -1,10 +1,5 @@
 <?php 
-require_once 'sendEmails.php';
-
-	session_start();
-
-	// connect to database
-	$db = mysqli_connect('localhost', 'admin', 'Q2werty1234', 'autometa');
+	include ('dbconnection.php');
 
 	// variable declaration
 	$username = "";
@@ -22,7 +17,7 @@ require_once 'sendEmails.php';
 	}
 
 
-	// call the login() function if login_btn is clicked
+	// call the login() function if register_btn is clicked
 	if (isset($_POST['login_btn'])) {
 		login();
 	}
@@ -30,7 +25,7 @@ require_once 'sendEmails.php';
 	if (isset($_GET['logout'])) {
 		session_destroy();
 		unset($_SESSION['user']);
-		header("location: /login.php");
+		header("location: login.php");
 	}
 
 	// REGISTER USER
@@ -74,55 +69,39 @@ require_once 'sendEmails.php';
 
 		// register user if there are no errors in the form
 		if (count($errors) == 0) {
-//			$password = password_hash($password_1, PASSWORD_DEFAULT);//encrypt the password before saving in the database
-			$password = md5($password_1);
-			$token = bin2hex(random_bytes(50)); // generate unique token
+			$password = md5($password_1);//encrypt the password before saving in the database
 
 			if (isset($_POST['user_type'])) {
 				$user_type = e($_POST['user_type']);
-				$query = "INSERT INTO users (username, email, token, user_type, password) 
-						  VALUES('$username', '$email', '$token', '$user_type', '$password')";
+				$query = "INSERT INTO users (username, email, user_type, password) 
+						  VALUES('$username', '$email', '$user_type', '$password')";
 				mysqli_query($db, $query);
 				$_SESSION['success']  = "New user successfully created!!";
-				header('location: /admin/home.php');
+				header('location: admin/home.php');
 			}else{
-				$query = "INSERT INTO users (username, email, token, user_type, password) 
-						  VALUES('$username', '$email', '$token', 'user', '$password')";
+				$query = "INSERT INTO users (username, email, user_type, password) 
+						  VALUES('$username', '$email', 'user', '$password')";
 				mysqli_query($db, $query);
-
-
-				
-				if ($query) { 										//Comment out if testing logging in without sending e-mail
-					// Send verification email to user
-					sendVerificationEmail($email, $token);
 
 				// get id of the created user
 				$logged_in_user_id = mysqli_insert_id($db);
 
 				$_SESSION['user'] = getUserById($logged_in_user_id); // put logged in user in session
 				$_SESSION['success']  = "You are now logged in";
-				$_SESSION['verified'] = FALSE;
-				header('location: /success.php');			
-
-					header('location: /success.php');
-				} else {
-					$_SESSION['error_msg'] = "Database error: Could not register user";
-				}													//End of comment for testing logging in without e-mail
-
-				}
+				header('location: success.php');				
+			}
 
 		}
 
 	}
 
-	
 ///////////////////////////////////////////////////////////////////////////////
 	// DELETE EXISTING USER
 	function delete(){
 		global $db, $errors;
 
 		// receive all input values from the form
-		$username = e($_POST['username']);
+		$username    =  e($_POST['username']);
 
 		// form validation: ensure that the form is correctly filled
 		if (empty($username)) { 
@@ -143,31 +122,15 @@ require_once 'sendEmails.php';
 			array_push($errors, "<strong><i style='color:black'>$username</i>&nbsp is an admin. Admins can't delete other admins.</strong>");
 		}
 	}
-		if (count($errors) == 0) {
-			$_SESSION['delete'] = TRUE;
-			$_SESSION['deletename'] = $username;
-		}
-	}
-
-	// Delete the user if "Confirm deletion" button is clicked
-	if (isset($_POST['cnfrmdlt'])) {
-			$username = $_SESSION['deletename'];
-			$query1 = "DELETE FROM users WHERE username='$username'";
-			mysqli_query($db, $query1);
-			array_push($errors, "<strong style='color:green'>User <i style='color:black'>$username</i> deleted successfully.</strong>");
-	}
-
 		// Delete user if there are no errors
-	/*	if (count($errors) == 0) {
+		if (count($errors) == 0) {
 				$query = "DELETE FROM users WHERE username='$username'";
 				mysqli_query($db, $query);
 				array_push($errors, "<strong style='color:green'>User <i style='color:black'>$username</i> deleted successfully.</strong>");
-		} */
+		}
 
-	
+	}
 //////////////////////////////////////////////////////////////////////////////////
-
-
 	// return user array from their id
 	function getUserById($id){
 		global $db;
@@ -196,9 +159,9 @@ require_once 'sendEmails.php';
 
 		// attempt login if no errors on form
 		if (count($errors) == 0) {
-			$password1 = md5($password);
+			$password = md5($password);
 
-			$query = "SELECT * FROM users WHERE username='$username' AND password='$password1' LIMIT 1";
+			$query = "SELECT * FROM users WHERE username='$username' AND password='$password' LIMIT 1";
 			$results = mysqli_query($db, $query);
 
 			if (mysqli_num_rows($results) == 1) { // user found
@@ -208,23 +171,12 @@ require_once 'sendEmails.php';
 
 					$_SESSION['user'] = $logged_in_user;
 					$_SESSION['success']  = "You are now logged in";
-					$_SESSION['verified'] = TRUE;  // <--This sets admin as verified user without the email verification
-					header('location: /admin/home.php');		  
-				}elseif ($logged_in_user['user_type'] == 'user') {
+					header('location: admin/home.php');		  
+				}else{
 					$_SESSION['user'] = $logged_in_user;
 					$_SESSION['success']  = "You are now logged in";
-					header('location: /success.php');
-					// checks if logged in basic user is verified
-						if ($logged_in_user['verified'] == '0') {
-							$_SESSION['verified'] = FALSE;
-							$_SESSION['email'] = 'email';
-						}
-						else {
-							$_SESSION['verified'] = TRUE;
-						}
-				}
-				else {
-					array_push($errors, "error message for debugging");
+
+					header('location: success.php');
 				}
 			}else {
 				array_push($errors, "Wrong username/password combination");
@@ -236,7 +188,7 @@ require_once 'sendEmails.php';
 	{
 		if (isset($_SESSION['user'])) {
 			return true;
-		} else{
+		}else{
 			return false;
 		}
 	}
@@ -270,8 +222,8 @@ require_once 'sendEmails.php';
 
 // Check if user is logged in as admin or basic user or not at all, and display the ADMIN/USER button or nothing
 	function usradmn() {
-			$admnbtn = '<a href="/admin/home.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">ADMIN</a>'; // Admin button
-			$usrbtn = '<a href="/success.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">USER</a>'; // Admin button
+			$admnbtn = '<a href="admin/home.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">ADMIN</a>'; // Admin button
+			$usrbtn = '<a href="success.php" class="w3-bar-item w3-button w3-hide-small w3-right w3-hover-black">USER</a>'; // Admin button
 			if (isAdmin() == true){
 				echo $admnbtn;
 			}
@@ -281,124 +233,5 @@ require_once 'sendEmails.php';
 			else {
 			}
 		}
-
-/*
-  Accept email of user whose password is to be reset
-  Send email to user to reset their password
-*/
-if (isset($_POST['reset-password'])) {
-    $email = mysqli_real_escape_string($db, $_POST['email']);
-    // ensure that the user exists on our system
-    $query = "SELECT email FROM users WHERE email='$email'";
-    $results = mysqli_query($db, $query);
-  
-    if (empty($email)) {
-      array_push($errors, "Email is required");
-    }else if(mysqli_num_rows($results) <= 0) {
-      array_push($errors, "Sorry, $email is not associated with any user.");
-    }
-    // Fetch the token used in verifying the user's email
-    $query2 = "SELECT token FROM users WHERE email='$email'";
-    $results2 = mysqli_query($db, $query2);
-//  $token = mysqli_fetch_assoc($results2);
-  
-    if (count($errors) == 0) {
-        if (mysqli_num_rows($results2) > 0) {
-            // output data of each row
-        while($row = mysqli_fetch_assoc($results2)) {
-             $token2 = $row["token"];
-
-    }
-    $to = $email;
-    $subject = "Request to reset password";
-	$msg = '
-We have received a request to reset your password on AutoMeta. If you did not do this, you can just ignore this message.
-If you did send the request, you can reset your password by clicking this link http://localhost/reset2.php?token=' . $token2 . ' or copy it into your browsers address bar.
-
-Greetings,
-the AutoMeta team
-	';
-    $headers = "From: AutoMeta@autometa.com" . "\r\n" .
-	'X-Mailer: PHP/' . phpversion();
-    mail($to, $subject, $msg, $headers);
-    header('location: pending.php?email=' . $email);
-}
-    }
-	}
-	
-	/*
-  Send users forgotten username to them by email
-*/
-if (isset($_POST['forgotname'])) {
-	$email = mysqli_real_escape_string($db, $_POST['email']);
-	// ensure that the user exists on our system
-	$query = "SELECT email FROM users WHERE email='$email'";
-	$results = mysqli_query($db, $query);
-
-	if (empty($email)) {
-		array_push($errors, "Email is required");
-	}else if(mysqli_num_rows($results) <= 0) {
-		array_push($errors, "Sorry, $email is not associated with any user.");
-	}
-	// Fetch username associated with the email
-	$query2 = "SELECT username FROM users WHERE email='$email'";
-	$results2 = mysqli_query($db, $query2);
-
-	if (count($errors) == 0) {
-			if (mysqli_num_rows($results2) > 0) {
-			while($row = mysqli_fetch_assoc($results2)) {
-					 $name = $row["username"];
-
-	}
-	$to = $email;
-	$subject = "Your username";
-$msg = '
-Hi!
-You asked us to email your forgotten AutoMeta username to you. If you did not, you can ignore this message.
-If you did, you are registered as ' . $name . ' into AutoMeta.
-
-Greetings,
-the AutoMeta team
-';
-	$headers = "From: AutoMeta@autometa.com" . "\r\n" .
-'X-Mailer: PHP/' . phpversion();
-	mail($to, $subject, $msg, $headers);
-	header('location: pendingname.php?email=' . $email);
-}
-	}
-}
-
-
-// Resetting user's password
-if (isset($_GET['token'])) {
-    $_SESSION['token']=mysqli_real_escape_string($db,$_GET['token']);
-}
-
-if (isset($_POST['new_password'])) {
-	$new_pass = mysqli_real_escape_string($db, $_POST['new_pass']);
-    $new_pass_c = mysqli_real_escape_string($db, $_POST['new_pass_c']);
-	$token = $_SESSION['token'];
-
-    if (empty($new_pass) || empty($new_pass_c)) array_push($errors, "Password is required");
-	if ($new_pass !== $new_pass_c) array_push($errors, "Password do not match");
-	
-    if (count($errors) == 0) {
-      // select email address of user from the users table 
-      $sql = "SELECT email FROM users WHERE token='$token' LIMIT 1";
-      $results = mysqli_query($db, $sql);
-      $email = mysqli_fetch_assoc($results)['email'];
-		
-	  // updating user's password to match the new one
-      if ($email) {
-        $new_pass3 = md5($_POST['new_pass']);
-        $sql = "UPDATE users SET password='$new_pass3' WHERE email='$email'";
-		$results = mysqli_query($db, $sql);
-		$_SESSION['reset'] = "Password reset successful!<br>
-		Log in with your new password.";
-		header('location: login.php');
-
-      }
-    }
-  }
 
 ?>
