@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<meta content="width=device-width, initial-scale=1">
   <link rel="stylesheet" type="text/css" href="gallerystyle.css">
+
 </head>
 <body>
 
@@ -26,13 +27,22 @@ To look at all the images in the gallery after a search, press "Clear search".</
 <input type="submit" value="Clear search" name="clearsearch">
 </form>
 
-<div class="w3-content w3-container w3-padding-64 w3-center" name="Search Results">
+<div name="Search Results">
+  <hr>
 <?php
 if (isset($msg)) {
-echo "<hr>";
-echo $msg;
-echo "<hr>";
+  if (empty($kwd)) {              //If the search field is empty
+    echo 'Please specify a keyword';
 }
+elseif (isset($kwd)) {
+  echo "Images with the keyword &quot;$kwd&quot";
+        while ($row = mysqli_fetch_assoc($result)) {
+            if (count($row) > 0) {
+                foreach ($row as $row2) {
+            echo "<div><img style='width:350px;' src='gallery/$row2'></div>";
+} }
+        }
+}}
 ?>
 </div>
 

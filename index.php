@@ -45,9 +45,31 @@
 </div>
 
 <!-- Container (About Section) -->
-<div class="w3-content w3-container w3-padding-64" id="about">
+<div class="w3-content w3-container w3-padding-64 w3-center" id="about">
   <h3 class="w3-center">ABOUT THIS PROJECT</h3>
-  <p class="w3-center"><em>Info about us and the project</em></p>
+  <p class="w3-center"><em>What is this?</em></p>
+This a project that we did as a part of a 1,5 month Software Developer course in the Turku University of Applied Sciences in 2019.<br>
+Point of the course was to take our existing IT and coding skills and use them to develop a web based application and do both front-end and back-end ourselves
+so we would have some experience with full stack development.<br>
+We also learned about agile software development as the project was done using the SCRUM method.
+
+<p class="w3-center"><em>Who are we?</em></p>
+We are 4 people with very different backgrounds in IT. Some of us had prior experience with coding and some of us didn't, but every one of us learned something new
+as we worked in different parts of the project.
+
+<p class="w3-center"><em>Is the project finished?</em></p>
+No.<br>
+At least for now. We had less than 6 workweeks to do this and the goal was never to deliver a finished product, the goal was to learn. We have a working demo that shows
+the concept of the application, but at the moment this text was written we didn't have a working demo with all the basic features we wanted to include.
+
+<p class="w3-center"><em>Contact info</em></p>
+Andy Dodson <a href="https://www.linkedin.com/in/andy-dodson-03696014a/">LinkedIn</a><br>
+Tommi Laiho <a href="https://www.linkedin.com/in/tommi-laiho/">LinkedIn</a><br>
+Jouni Kiviperä <a href="https://www.linkedin.com/in/jouni-kiviper%C3%A4-475610129/">LinkedIn</a><br>
+Jouko Hyle <a href="https://www.linkedin.com/in/joukohyle/">LinkedIn</a>
+
+<p class="w3-center"><em>We would want to thank Google, W3Schools, Coding With Awa, Stack Overflow and pretty much most of the internet for helping us make this possible.</em></p>
+
 </div>
 
 <!-- Footer -->
