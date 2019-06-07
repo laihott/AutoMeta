@@ -1,0 +1,79 @@
+body, html {
+	font-family: "Lato", sans-serif;
+	height: 100%;
+	color: #777;
+	line-height: 1.8;
+  }
+
+/* Logo */
+.logo {
+  background-image: url('/images/autometalogo.png');
+  background-position: center bottom;
+  background-repeat: no-repeat;
+  padding-top:240px;
+}
+
+/* Harmaa välipalkki containereiden väliin */
+.bar {
+  background-color: #666666;
+  padding: 10px;
+}
+
+/*Log In & Sign Up Form style begins */
+/* Set a style for all buttons */
+button {
+  background-color: #4CAF50;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Extra styles for the submit button */
+.loginbtn {
+  padding: 10px 18px;
+  background-color: #4CAF50;
+}
+
+/* Extra styles for delete button */
+.dltbtn {
+  padding: 10px 18px;
+  background-color: rgb(161, 0, 0);
+}
+.dltbtn2 {
+  width: 35%;
+  padding: 5px;
+  margin: 8px 20px;
+  background-color: rgb(255, 0, 0);
+}
+.cnclbtn {
+  width: 35%;
+  padding: 5px;
+  margin: 8px 20px;
+  background-color: rgb(50, 206, 55);
+}
+
+/* Style the horizontal ruler */
+hr {
+  border: 1px solid #b1b1b1;
+  margin-bottom: 25px;
+}
+
+.formheader {
+	width: 40%;
+	margin: 100px auto 0px;
+  color: white;
+	background: #009688;
+	text-align: center;
+	border: 1px solid #00bdaa;
+	border-bottom: none;
+	border-radius: 10px 10px 0px 0px;
+	padding: 0px 10px 1px 10px;
+}
+/* Log In & Sign Up Form style ends */

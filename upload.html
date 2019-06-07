@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <style>
+        #drop_file_zone {
+        background-color: #eaeaea; 
+        border: #999 5px dashed;
+        border-radius: 20px;
+        width: 600px; 
+        padding-top: 100px;
+        padding-bottom: 100px;
+        font-size: 18px;
+        }
+        #drop_file_zone:hover {
+        background-color: #cecece;
+        }
+        #drag_upload_file {
+        width:50%;
+        margin:0 auto;
+        }
+        #drag_upload_file p {
+        text-align: center;
+        }
+        #drag_upload_file #selectfile { /*Piilottaa dragndrop laatikon select file napin*/
+        display: none;
+        }
+        </style>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script> <!--Drag and droppiin liittyvä-->
+    </head>
+<body>
+
+<form action="upload.php" method="post" enctype="multipart/form-data">
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload"><br>
+    <input type="submit" value="Upload Image" name="submit">
+</form>
+<div id="uploadstatus"><p></p></div>
+
+<!-- Drag and drop laatikko -->
+<div id="drop_file_zone" ondrop="upload.php" ondragover="return false">
+        <div id="drag_upload_file">
+          <p>Drop file here</p>
+          <p>or</p>
+          <p><input type="button" value="Select File" onclick="file_explorer();"></p> <!--Näkyvä nappi joka avaa file explorerin-->
+          <input type="file" id="selectfile"> <!--Select file nappi joka on piilotetty-->
+        </div>
+      </div>
+<!-- Drag and drop loppuu-->
+
+<!-- To check from URL if upload was successful and prints text based on the result-->
+<script type="text/javascript">
+  if(window.location.href.indexOf("upload1") > -1) {
+       document.getElementById('uploadstatus').innerHTML += 'Upload successful.';
+}
+    else if(window.location.href.indexOf("upload0") > -1) {
+        document.getElementById('uploadstatus').innerHTML += 'Upload failed.<br>Why? I dont have enough intelligence yet to tell you. Maybe your file was too big. Or your picture too stupid.';
+} 
+
+/* drag and drop javascript */
+  var fileobj;
+  function upload_file(e) {
+    e.preventDefault();
+    for (i = 0;i<e.dataTransfer.files.lenght; i++){
+    fileobj = e.dataTransfer.files[i];
+    ajax_file_upload(fileobj);
+  }
+  }
+ 
+  function file_explorer() {
+    document.getElementById('selectfile').click();
+    document.getElementById('selectfile').onchange = function() {
+        fileobj = document.getElementById('selectfile').files[0];
+      ajax_file_upload(fileobj);
+    };
+  }
+ 
+  function ajax_file_upload(file_obj) {
+    if(file_obj != undefined) {
+        var form_data = new FormData();                  
+        form_data.append('file', file_obj);
+      $.ajax({
+        type: 'POST',
+        url: 'ajax.php',
+        contentType: false,
+        processData: false,
+        data: form_data,
+        success:function(response) {
+          alert(response);
+          $('#selectfile').val('');
+        }
+      });
+    }
+  }
+/* drag n drop javascript */
+</script>
+</body>
+</html>
