@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Image fileName="ImageFileName" location="FileImageLocation(local/web/GS">
+  <Safe_Search Adult="Very Unlikely" Spoof="Unlikely" Medical="Very Unlikely" Violence="Very Unlikely" Racy="Very Unlikely"/>
+  <Labels>
+    <labelItem accuracy="99.54">Dog</labelItem>
+    <labelItem accuracy="98.9">Mammal</labelItem>
+    <labelItem accuracy="98.51">Vertebrate</labelItem>
+    <labelItem accuracy="98.38">Dog breed</labelItem>
+    <labelItem accuracy="98.14">Canidae</labelItem>
+    <labelItem accuracy="96.2">Puppy</labelItem>
+    <labelItem accuracy="89.8">Labrador retriever</labelItem>
+    <labelItem accuracy="85.93">Skin</labelItem>
+    <labelItem accuracy="85.75">Companion dog</labelItem>
+    <labelItem accuracy="85.47">Carnivore</labelItem>
+  </Labels>
+  <Landmarks/>
+  <Objects>
+    <objectItem accuracy="91.71">Dog<vertices verticesXY="0.21435292,0.83882356"/></objectItem>
+    <objectItem accuracy="62.5">Animal<vertices verticesXY="0.21435292,0.83882356"/></objectItem>
+  </Objects>
+  <faces/>
+  <Keywords>
+    <KeyItem>Dog</KeyItem>
+    <KeyItem>Mammal</KeyItem>
+    <KeyItem>Vertebrate</KeyItem>
+    <KeyItem>Dog breed</KeyItem>
+    <KeyItem>Canidae</KeyItem>
+    <KeyItem>Puppy</KeyItem>
+    <KeyItem>Labrador retriever</KeyItem>
+    <KeyItem>Skin</KeyItem>
+    <KeyItem>Companion dog</KeyItem>
+    <KeyItem>Carnivore</KeyItem>
+    <KeyItem>Dog</KeyItem>
+    <KeyItem>Animal</KeyItem>
+  </Keywords>
+</Image>

@@ -1,0 +1,10 @@
+composer.lock
+composer.json
+/vendor/*
+autometa96395-4c76c8e1b1e.json
+autopro-234567.json
+php_errors.log
+/res/*
+/uploads/*
+demo.xml
+

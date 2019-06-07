@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Image fileName="ImageFileName" location="FileImageLocation(local/web/GS">
+  <Safe_Search Adult="Very Unlikely" Spoof="Very Unlikely" Medical="Very Unlikely" Violence="Very Unlikely" Racy="Very Unlikely"/>
+  <Labels>
+    <labelItem accuracy="88.64">Public space</labelItem>
+    <labelItem accuracy="85.95">Pedestrian</labelItem>
+    <labelItem accuracy="85.53">Town</labelItem>
+    <labelItem accuracy="84.29">Human settlement</labelItem>
+    <labelItem accuracy="83.97">Marketplace</labelItem>
+    <labelItem accuracy="83.21">Market</labelItem>
+    <labelItem accuracy="81.46">Community</labelItem>
+    <labelItem accuracy="80.35">City</labelItem>
+    <labelItem accuracy="80.22">Street</labelItem>
+    <labelItem accuracy="77.57">Downtown</labelItem>
+  </Labels>
+  <Landmarks/>
+  <Objects>
+    <objectItem accuracy="86.17">Person<vertices verticesXY="0.57011765,0.9950589"/></objectItem>
+    <objectItem accuracy="77.37">Man<vertices verticesXY="0.35263988,0.9722497"/></objectItem>
+    <objectItem accuracy="75.44">Person<vertices verticesXY="0.8286399,0.9920144"/></objectItem>
+    <objectItem accuracy="73.97">Woman<vertices verticesXY="0.57011765,0.9950589"/></objectItem>
+    <objectItem accuracy="71.88">Man<vertices verticesXY="0.8286399,0.9920144"/></objectItem>
+    <objectItem accuracy="52.75">Man<vertices verticesXY="0.45422533,0.9921735"/></objectItem>
+    <objectItem accuracy="51.11">Person<vertices verticesXY="0.35263988,0.9722497"/></objectItem>
+    <objectItem accuracy="50.71">Woman<vertices verticesXY="0.45422533,0.9921735"/></objectItem>
+  </Objects>
+  <faces/>
+  <Keywords>
+    <KeyItem>Public space</KeyItem>
+    <KeyItem>Pedestrian</KeyItem>
+    <KeyItem>Town</KeyItem>
+    <KeyItem>Human settlement</KeyItem>
+    <KeyItem>Marketplace</KeyItem>
+    <KeyItem>Market</KeyItem>
+    <KeyItem>Community</KeyItem>
+    <KeyItem>City</KeyItem>
+    <KeyItem>Street</KeyItem>
+    <KeyItem>Downtown</KeyItem>
+    <KeyItem>Person</KeyItem>
+    <KeyItem>Man</KeyItem>
+    <KeyItem>Person</KeyItem>
+    <KeyItem>Woman</KeyItem>
+    <KeyItem>Man</KeyItem>
+    <KeyItem>Man</KeyItem>
+    <KeyItem>Person</KeyItem>
+    <KeyItem>Woman</KeyItem>
+  </Keywords>
+</Image>
