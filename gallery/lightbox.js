@@ -1,5 +1,7 @@
-var slideIndex = 1;
-
+var slideIndex= 1;
+if (typeof slideIndex ==='undefined') {
+   slideIndex =1 ;
+}
 showSlides(slideIndex);
 
 function openModal() {

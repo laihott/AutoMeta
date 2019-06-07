@@ -1,13 +1,41 @@
+<?php include('../functions.php') ?>
+<?php include 'search.php' ?>
 <!DOCTYPE html>
+<?php include('../navbar.php') ?>		
 <html>
-<meta name="viewport" content="width=device-width, initial-scale=1" version="1.0">
-<!-- dyanamic gallerie responsive -->
 <head>
-  <link rel="stylesheet" type="text/css" href="gallerieStyle.css">
+	<title>AutoMeta - Gallery</title>
+	<meta charset="UTF-8">
+	<meta content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="gallerystyle.css">
 </head>
 <body>
 
-<h2 id="galleryHeading" style="text-align:center">Gallerie</h2>
+
+<div class="w3-content w3-container w3-padding-64">
+  <div class="w3-center">
+<h2 class="w3-center">Gallery</h2>
+<div class="w3-center">
+All the images in the gallery are shown by default.<br>
+Enter a keyword into the field to search images with that keyword assigned to it.<br>
+To look at all the images in the gallery after a search, press "Clear search".</div>
+
+<form action="Gallerie.php" method="post">
+<input style="width:50%; margin-top:20px; margin-bottom:40px;" type="text" placeholder="Keyword you want to find images with" name="kwd" id="kwd">
+<input type="submit" value="Search" name="searchbtn">
+<input type="submit" value="Clear search" name="clearsearch">
+</form>
+
+<div class="w3-content w3-container w3-padding-64 w3-center" name="Search Results">
+<?php
+if (isset($msg)) {
+echo "<hr>";
+echo $msg;
+echo "<hr>";
+}
+?>
+</div>
+
 <?php
 $fileNameList = array('null');
 
@@ -21,22 +49,6 @@ $fileNameList = array('null');
     $xml_imgName = $strImageName.".xml";
     return $xml_imgName;
     
-  }
-
-  function retreiveKeywords () {
-    //collect_XMLFile(imageFileName)
-    //open returned imagefilename.xml
-    //keyword area :
-     //<lr:hierarchicalSubject>
-    //<rdf:Bag>
-    //<rdf:li>1 - "Who"</rdf:li>
-    //<rdf:li>1 - "Who"|Age</rdf:li>
-    //<rdf:li>1 - "Who"|Age|infant</rdf:li>
-    //</rdf:Bag>
-    //scan file for keyword area
-    //extract keywords as array of array os string - to enable hierachy level keywords
-   
-    //return keyword array
   }
     
   function openReadDir ($dirPath) { //open and read contents of gallery directory
@@ -63,10 +75,11 @@ $fileNameList = array('null');
     } // end of openReadDir
 
   function generateImgType ($imgType) {
-    global $fileNameList; 
+    global $fileNameList, $msg; 
     
+    if (empty($msg)) {
     if ($fileNameList[0] == "null" ) {
-      openReadDir ("gallery/galleryimgs/");  // set gallery image file directory here!!
+      openReadDir ("gallery/");
     }
 
     $noImages=count($fileNameList);
@@ -100,7 +113,7 @@ $fileNameList = array('null');
             }
         break;
       }
-    }
+    }}
     
 
   echo"<div class='row'>";
@@ -126,48 +139,8 @@ $fileNameList = array('null');
 echo"</div>";
 
 ?>
-
-<script> 
-var slideIndex= 1;
-if (typeof slideIndex ==='undefined') {
-   slideIndex =1 ;
-}
-showSlides(slideIndex);
-
-function openModal() {
-    document.getElementById('myModal').style.display = "block";
-}
-  
-function closeModal() {
-    document.getElementById('myModal').style.display = "none";
-}
-  
-function plusSlides(n) {
-    showSlides(slideIndex += n);
-}
-  
-function currentSlide(n) {
-    showSlides(slideIndex = n);
-}
-  
-function showSlides(n) {
-    var i;
-    var slides = document.getElementsByClassName("mySlides");
-    var dots = document.getElementsByClassName("demo");
-    var captionText = document.getElementById("caption");
-    if (n > slides.length) {slideIndex = 1}
-    if (n < 1) {slideIndex = slides.length}
-    for (i = 0; i < slides.length; i++) {
-        slides[i].style.display = "none";
-    }
-    for (i = 0; i < dots.length; i++) {
-        dots[i].className = dots[i].className.replace(" active", "");
-    }
-    slides[slideIndex-1].style.display = "block";
-    dots[slideIndex-1].className += " active";
-    captionText.innerHTML = dots[slideIndex-1].alt;
-}
-
-</script>
+</div>
+  </div>
+<script type="text/javascript" src="lightbox.js"></script>
 </body>
 </html>

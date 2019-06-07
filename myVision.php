@@ -64,7 +64,7 @@ function collectImgSource () {
         endif;
         //fopen($dir.$fileName,'r');
         $contents = file_get_contents($fileName,false);
-        //fclose($fileName); // <<<<<< file is left open error to be solved
+        //fclose($fileName); // << file is left open error to be solved
         $fileX64 = base64_encode($contents); // convert file based image to basex64
      return $fileX64 ;
     }    
