@@ -8,7 +8,7 @@
 <div class="w3-top">
   <div class="w3-bar" id="myNavbar">
     <a class="w3-bar-item w3-button w3-hover-black w3-hide-medium w3-hide-large w3-right" href="javascript:void(0);" onclick="toggleFunction()" title="Toggle Navigation Menu">
-    </a>
+    <i class="fa fa-bars"></i></a>
     <a href="/#main" class="w3-bar-item w3-button w3-hide-small">MAIN</a>
     <a href="/#help" class="w3-bar-item w3-button w3-hide-small">HELP</a>
     <a href="/gallery/gallery_upload.php" class="w3-bar-item w3-button w3-hide-small">UPLOAD</a>
@@ -23,12 +23,13 @@
 
   <!-- Navbar on small screens -->
   <div id="navDemo" class="w3-bar-block w3-white w3-hide w3-hide-large w3-hide-medium">
-    <a href="index.php#main" class="w3-bar-item w3-button" onclick="toggleFunction()">MAIN</a>
-    <a href="index.php#help" class="w3-bar-item w3-button" onclick="toggleFunction()">HELP</a>
+    <a href="/#main" class="w3-bar-item w3-button" onclick="toggleFunction()">MAIN</a>
+    <a href="/#help" class="w3-bar-item w3-button" onclick="toggleFunction()">HELP</a>
     <a href="/analyze.php" class="w3-bar-item w3-button" onclick="toggleFunction()">UPLOAD</a>
-    <a href="index.php#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
-    <a href="HTML TIEDOSTON NIMI TÄNNE" class="w3-bar-item w3-button" onclick="toggleFunction()">GALLERY</a>
-    <a href="#" class="w3-bar-item w3-button">Login</a>
+    <a href="/#about" class="w3-bar-item w3-button" onclick="toggleFunction()">ABOUT</a>
+    <a href="/gallery/Gallerie.php" class="w3-bar-item w3-button" onclick="toggleFunction()">GALLERY</a>
+    <a href="/login.php" class="w3-bar-item w3-button">Login</a>
+    <a href="/register.php" class="w3-bar-item w3-button" onclick="toggleFunction()">Sign up</a>
     <a href="#" class="w3-bar-item w3-button">Language</a>
   </div>
 </div>
